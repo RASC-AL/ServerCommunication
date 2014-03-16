@@ -13,22 +13,33 @@ namespace Server1
         static void Main(string[] args)
         {
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sck.Bind(new IPEndPoint(0, 1234));
+            sck.Bind(new IPEndPoint(0, 5000));
             sck.Listen(100);
-            
-            Socket accepted = sck.Accept();
-            Buffer = new byte[accepted.SendBufferSize];    //Default Buffer Size is 8192
-            int bytesRead = accepted.Receive(Buffer);
-            byte[] formatted = new byte[bytesRead];
-            for(int i = 0; i< bytesRead; i++)
+
+            while (true)
             {
-                formatted[i] = Buffer[i];
+                try
+                {
+                    Socket accepted = sck.Accept();
+                    Buffer = new byte[accepted.SendBufferSize];    //Default Buffer Size is 8192
+                    int bytesRead = accepted.Receive(Buffer);
+                    byte[] formatted = new byte[bytesRead];
+                    for (int i = 0; i < bytesRead; i++)
+                    {
+                        formatted[i] = Buffer[i];
+                    }
+                    String strData = Encoding.ASCII.GetString(formatted);
+                    Console.Write(strData + "\r\n");
+                    Console.Read();
+
+                    accepted.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
             }
-            String strData = Encoding.ASCII.GetString(formatted);
-            Console.Write(strData + "\r\n");
-            Console.Read();
             sck.Close();
-            accepted.Close();
         }
     }
 }

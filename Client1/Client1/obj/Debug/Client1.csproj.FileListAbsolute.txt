@@ -2,3 +2,8 @@ c:\Users\Vijay\documents\visual studio 2013\Projects\Server1\Client1\bin\Debug\C
 c:\Users\Vijay\documents\visual studio 2013\Projects\Server1\Client1\bin\Debug\Client1.pdb
 c:\Users\Vijay\documents\visual studio 2013\Projects\Server1\Client1\obj\Debug\Client1.exe
 c:\Users\Vijay\documents\visual studio 2013\Projects\Server1\Client1\obj\Debug\Client1.pdb
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\Client1.exe
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\Client1.pdb
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\Client1.csprojResolveAssemblyReference.cache
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\Client1.exe
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\Client1.pdb
