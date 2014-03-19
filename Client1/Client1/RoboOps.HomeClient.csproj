@@ -7,8 +7,8 @@
     <ProjectGuid>{FD613C89-AC77-43BD-B4D8-53BA474D0259}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Client1</RootNamespace>
-    <AssemblyName>Client1</AssemblyName>
+    <RootNamespace>RoboOps.HomeClient</RootNamespace>
+    <AssemblyName>RoboOps.HomeClient</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="RoverComm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,5 +1,4 @@
-F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\Client1.exe
-F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\Client1.pdb
-F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\RoboOps.HomeClient.csprojResolveAssemblyReference.cache
-F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\Client1.exe
-F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\Client1.pdb
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\RoboOps.HomeClient.exe
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\bin\Debug\RoboOps.HomeClient.pdb
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\RoboOps.HomeClient.exe
+F:\Programming\Home Client\ClientCommunication\Client1\Client1\obj\Debug\RoboOps.HomeClient.pdb

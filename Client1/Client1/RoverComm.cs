@@ -11,7 +11,7 @@ namespace RoboOps.HomeClient
         string ip;
         int port;
         static Socket sck;
-        public int noOfCameras;
+        
 
         public RoverComm(string ip, int port)
         {
@@ -20,7 +20,6 @@ namespace RoboOps.HomeClient
             //TODO: remove the hardcoding
             this.ip = ip;
             this.port = port;
-            this.noOfCameras = 5;
         }
 
         public bool send(string msg)
@@ -32,7 +31,7 @@ namespace RoboOps.HomeClient
             {
                 sck.Connect(localEndPoint);
 
-                byte[] data = Encoding.ASCII.GetBytes(msg);
+                byte[] data = Encoding.ASCII.GetBytes(msg.Trim());
                 sck.Send(data);
 
             }
@@ -86,17 +85,26 @@ namespace RoboOps.HomeClient
             return send("B " + r.ToString() + " " + theta );
         }
 
+        public bool MoveArm(int theta1, int theta2, int theta3)
+        {
+            return send("arm:" + theta1.ToString() + "," + theta2.ToString() + "," + theta3.ToString());
+        }
+
         public bool ChangeCamera(int cam)
         {
-            if (cam > noOfCameras)
+            if (cam > Constants.noOfCameras)
                 return false;
-            int[] cams = new int[noOfCameras];
-            for (int i = 0; i < noOfCameras; i++)
+            string cams = "cam ";
+            for (int i = 1; i <= Constants.noOfCameras; i++)
             {
-                cams[i] = 0;
+                if (cam == i)
+                    cams += "1,";
+                else
+                    cams += "0,";
             }
-            cams[cam] = 1;
-            return send(cams.ToString());
+            //cams = cams.Substring(0, cams.Length - 1);
+            cams = cams + "15,640,480";
+            return send(cams);
         }
 
         static void Main(string[] args)
@@ -111,8 +119,5 @@ namespace RoboOps.HomeClient
             RoverComm p = new RoverComm("128.205.54.5", 5000);
             p.send(s);
         }
-
-
-
     }
 }
