@@ -75,36 +75,20 @@ namespace RoboOps.HomeClient
             return true;
         }
 
-        public bool MoveForward(double r, double theta)
+        public bool MoveRover(int leftSpeed, int rightSpeed)
         {
-            return send("F " + r.ToString() + " " + theta );
+            return send("drv " + leftSpeed.ToString() + "," + rightSpeed.ToString());
         }
 
-        public bool MoveBackward(double r, double theta)
+        public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw)
         {
-            return send("B " + r.ToString() + " " + theta );
-        }
-
-        public bool MoveArm(int theta1, int theta2, int theta3)
-        {
-            return send("arm:" + theta1.ToString() + "," + theta2.ToString() + "," + theta3.ToString());
+            return send("arm " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString());
         }
 
         public bool ChangeCamera(int cam)
         {
-            if (cam > Constants.noOfCameras)
-                return false;
-            string cams = "cam ";
-            for (int i = 1; i <= Constants.noOfCameras; i++)
-            {
-                if (cam == i)
-                    cams += "1,";
-                else
-                    cams += "0,";
-            }
-            //cams = cams.Substring(0, cams.Length - 1);
-            cams = cams + "15,640,480";
-            return send(cams);
+
+            return send("cam " + (cam - 1).ToString()+ ",5,1024,768");
         }
 
         static void Main(string[] args)
