@@ -1,0 +1,8 @@
+prefix=/home/sbrover/catkin_ws/install
+
+Name: serialpy
+Description: Description of serialpy
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/sbrover/catkin_ws/install/lib 
+Requires: 

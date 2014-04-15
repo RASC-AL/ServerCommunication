@@ -1,0 +1,21 @@
+<package>
+  <description brief="usb_cam_test">
+
+     usb_cam_test
+
+  </description>
+  <author>UB Space Bulls</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/usb_cam_test</url>
+  <depend package="image_transport"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+  <depend package="opencv2"/>
+  <depend package="cv_bridge"/>
+  <depend package="usb_cam"/>
+
+</package>
+
+

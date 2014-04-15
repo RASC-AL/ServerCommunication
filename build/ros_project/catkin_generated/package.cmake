@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "ros_project")
+set(ros_project_MAINTAINER "amit <amit@todo.todo>")
+set(ros_project_DEPRECATED "")
+set(ros_project_VERSION "0.0.0")
+set(ros_project_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(ros_project_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(ros_project_BUILDTOOL_DEPENDS "catkin")
