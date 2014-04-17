@@ -82,7 +82,7 @@ namespace RoboOps.HomeClient
 
         public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw)
         {
-            return send("arm " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString());
+            return send("ARM " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString() + ",10");
         }
 
         public bool ChangeCamera(int cam)
