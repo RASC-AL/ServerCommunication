@@ -1,0 +1,8 @@
+.*
+*.o
+*.a
+tempsense
+client
+Debug
+
+!.gitignore
