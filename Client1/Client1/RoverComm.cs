@@ -85,10 +85,10 @@ namespace RoboOps.HomeClient
             return send("ARM " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString() + ",10");
         }
 
-        public bool ChangeCamera(int cam)
+        public bool ChangeCamera(int cam, int fps, int width, int height)
         {
 
-            return send("cam " + (cam - 1).ToString()+ ",5,1024,768");
+            return send("cam " + (cam - 1).ToString()+ ","+fps.ToString()+","+width.ToString()+","+height.ToString());
         }
 
         static void Main(string[] args)
