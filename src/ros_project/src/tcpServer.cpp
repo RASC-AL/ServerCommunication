@@ -8,13 +8,19 @@
 #include <string>
 using namespace std;
 using namespace ros;
-int startSerial();
 ros::Publisher ptz_pub;
+int startSerial();
 void setParameters(struct termios tty,int fd);
 void setParameters(struct termios tty);
 void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub);
 int main (int argc, char *argv[]) 
 {
+	int fd_max;
+	struct timeval tv;
+	tv.tv_sec = 2;
+	tv.tv_usec = 0;
+	fd_set read_fds;
+	FD_ZERO(&read_fds);
 	ros::init(argc,argv,"Server");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(10);
@@ -27,32 +33,32 @@ int main (int argc, char *argv[])
 		ROS_INFO("Error! - Socket Creation Error\n");
 		exit(0);
 	}
-	server_setup();
-	int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
-	//int USB = startSerial();
+	FD_SET(server_sock_id,&read_fds);
 	while (ros::ok())
 	{
-		if(conn_id == -1)
+		select(server_sock_id+1,&read_fds,NULL,NULL,&tv);
+		if(FD_ISSET(server_sock_id,&read_fds))
 		{
-
-			ROS_INFO("Error! - Accept failed\n");
-			exit(0);
-
+			int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
+			if(conn_id == -1) // WOULDBLOCK
+			{
+				continue;
+			}
+			ROS_INFO("Connection accepted\n");
+			int status;
+			memset(recv_buf,0x0,MAX_BUF_SIZE);
+			status = recv(conn_id,recv_buf,MAX_BUF_SIZE,0);
+			if(status <= 0)
+			{
+				ROS_INFO("Error! - Read Error");
+			}
+			ROS_INFO("Received Data : %s",recv_buf);
+			handleRecievedData(recv_buf,config_pub,arm_pub);
 		}
-		ROS_INFO("Connection accepted\n");
-		int status;
-		memset(recv_buf,0x0,MAX_BUF_SIZE);
-		status = recv(conn_id,recv_buf,MAX_BUF_SIZE,0);
-		if(status <= 0)
-		{
-			ROS_INFO("Error! - Read Error");
-		}
-		ROS_INFO("Received Data : %s",recv_buf);
-		handleRecievedData(recv_buf,config_pub,arm_pub);
 		ros::spinOnce();
 		loop_rate.sleep();
+		close(server_sock_id);
 	}
-	close(server_sock_id);
 	return 0;
 }
 void server_setup()
