@@ -9,6 +9,7 @@
 using namespace std;
 using namespace ros;
 int startSerial();
+ros::Publisher ptz_pub;
 void setParameters(struct termios tty,int fd);
 void setParameters(struct termios tty);
 void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub);
@@ -19,6 +20,7 @@ int main (int argc, char *argv[])
 	ros::Rate loop_rate(10);
 	ros::Publisher config_pub = n.advertise<std_msgs::String>("config",1000);
 	ros::Publisher arm_pub = n.advertise<std_msgs::String>("ARM",1000);
+	ptz_pub = n.advertise<std_msgs::String>("chatter",1000);
 	server_sock_id = socket(SOCK_FAMILY,SOCK_TYPE,SOCK_FLAG);
 	if(server_sock_id < 0)
 	{
@@ -26,10 +28,10 @@ int main (int argc, char *argv[])
 		exit(0);
 	}
 	server_setup();
+	int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
 	//int USB = startSerial();
 	while (ros::ok())
 	{
-		int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
 		if(conn_id == -1)
 		{
 
@@ -106,6 +108,15 @@ void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub)
 		ROS_INFO("sent data : %s",temp);
 		msg.data = temp;
 		arm_pub.publish(msg);
+	}
+	else if(!strcmp(type,"PTZ"))
+	{
+		int written = strlen(recv_buf);
+		char temp[20]={'\0'};
+		strncpy(temp,recv_buf+4,written);
+		ROS_INFO("sent data : %s",temp);
+		msg.data = temp;
+		ptz_pub.publish(msg);
 	}
 }
 
