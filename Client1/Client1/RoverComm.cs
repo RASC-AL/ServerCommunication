@@ -80,15 +80,15 @@ namespace RoboOps.HomeClient
             return send("drv " + leftSpeed.ToString() + "," + rightSpeed.ToString());
         }
 
-        public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw)
+        public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw, string scoop)
         {
-            return send("ARM " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString() + ",10");
+            return send("ARM " + baseRotation.ToString() + "," + baseLift.ToString() + "," + elbowRotation.ToString() + "," + yaw.ToString() + "," + scoop);
         }
 
         public bool ChangeCamera(int cam, int fps, int width, int height)
         {
 
-            return send("cam " + (cam - 1).ToString()+ ","+fps.ToString()+","+width.ToString()+","+height.ToString());
+            return send("CAM " + (cam - 1).ToString()+ ","+fps.ToString()+","+width.ToString()+","+height.ToString());
         }
 
         static void Main(string[] args)
