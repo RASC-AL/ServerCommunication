@@ -77,7 +77,7 @@ namespace RoboOps.HomeClient
 
         public bool MoveRover(int leftSpeed, int rightSpeed)
         {
-            return send("drv " + leftSpeed.ToString() + "," + rightSpeed.ToString());
+            return send("DRV " + leftSpeed.ToString() + "," + rightSpeed.ToString());
         }
 
         public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw, string scoop)
@@ -89,6 +89,12 @@ namespace RoboOps.HomeClient
         {
 
             return send("CAM " + (cam - 1).ToString()+ ","+fps.ToString()+","+width.ToString()+","+height.ToString());
+        }
+
+        public bool PTZ(int pan, int tilt, int zoom, int focus, int brightness, int iris, bool autofocus)
+        {
+
+            return send("PTZ " + pan.ToString() + "," + tilt.ToString() + "," + zoom.ToString() + "," + focus.ToString() + "," + brightness.ToString() + "," + iris.ToString() + "," + (autofocus ? "true" : "false"));
         }
 
         static void Main(string[] args)
