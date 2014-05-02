@@ -4,10 +4,10 @@ from std_msgs.msg import String
 import serial
 
 
-com = serial.Serial('/dev/ttyACM0',baudrate=115200)
+com = serial.Serial('/dev/ttyACM1',baudrate=115200)
 def callback(data):
         data = str(data)
-        com.write(data)
+        com.write('d,'+data)
         com.flush()
 
 def controller():
