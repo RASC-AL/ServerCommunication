@@ -39,6 +39,8 @@ namespace RoboOps.HomeClient
             {
                 //if connections fails 
                 Console.Write("Unable to connect to remote end point!\r\n");
+                Console.WriteLine(e.GetBaseException());
+                Console.WriteLine(e.Message);
                 return false;
             }
             finally
@@ -65,7 +67,10 @@ namespace RoboOps.HomeClient
             catch (Exception e)
             {
                 //if connections fails 
-                Console.Write("Unable to connect to remote end point!\r\n");
+
+                Console.WriteLine("Unable to connect to remote end point!\r\n");
+                Console.WriteLine(e.GetBaseException());
+                Console.WriteLine(e.Message);
                 return false;
             }
             finally
@@ -78,6 +83,16 @@ namespace RoboOps.HomeClient
         public bool MoveRover(int leftSpeed, int rightSpeed)
         {
             return send("DRV " + leftSpeed.ToString() + "," + rightSpeed.ToString());
+        }
+
+        public bool ChangeRelay(bool mast, bool arm)
+        {
+            return send("RLY " + (mast?"1":"0") + "," + (arm?"1":"0"));
+        }
+
+        public bool ChangeCameras(string cameras)
+        {
+            return send("CCM " + cameras);
         }
 
         public bool MoveArm(int baseRotation, int baseLift, int elbowRotation, int yaw, string scoop)
