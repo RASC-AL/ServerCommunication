@@ -6,47 +6,63 @@
 #include <errno.h>      // Error number definitions
 #include <termios.h>    // POSIX terminal control definitions
 #include <string>
+#include	<axis_camera/Axis.h>
 using namespace std;
 using namespace ros;
+using namespace axis_camera;
+ros::Publisher ptz_pub,drv_pub;
 int startSerial();
 void setParameters(struct termios tty,int fd);
 void setParameters(struct termios tty);
 void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub);
 int main (int argc, char *argv[]) 
 {
+	int fd_max,yes=1;
+	struct timeval tv;
+	tv.tv_sec = 2;
+	tv.tv_usec = 0;
+	fd_set read_fds,master;
+	FD_ZERO(&read_fds);
+	FD_ZERO(&master);
 	ros::init(argc,argv,"Server");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(10);
 	ros::Publisher config_pub = n.advertise<std_msgs::String>("config",1000);
 	ros::Publisher arm_pub = n.advertise<std_msgs::String>("ARM",1000);
+	ptz_pub = n.advertise<axis_camera::Axis>("/cmd",1000);
+	drv_pub = n.advertise<std_msgs::String>("/DRV",1000);
 	server_sock_id = socket(SOCK_FAMILY,SOCK_TYPE,SOCK_FLAG);
+	setsockopt(server_sock_id,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int));
 	if(server_sock_id < 0)
 	{
 		ROS_INFO("Error! - Socket Creation Error\n");
 		exit(0);
 	}
 	server_setup();
-	//int USB = startSerial();
+	FD_SET(server_sock_id,&read_fds);
 	while (ros::ok())
 	{
-		int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
-		if(conn_id == -1)
+		master = read_fds;
+		int val = select(server_sock_id+1,&master,NULL,NULL,&tv);
+		if(FD_ISSET(server_sock_id,&master))
 		{
-
-			ROS_INFO("Error! - Accept failed\n");
-			exit(0);
-
+			ROS_INFO("waiting");
+			int conn_id = accept(server_sock_id,(struct sockaddr *)NULL,NULL);
+			if(conn_id == -1) // WOULDBLOCK
+			{
+				continue;
+			}
+			ROS_INFO("Connection accepted\n");
+			int status;
+			memset(recv_buf,0x0,MAX_BUF_SIZE);
+			status = recv(conn_id,recv_buf,MAX_BUF_SIZE,0);
+			if(status <= 0)
+			{
+				ROS_INFO("Error! - Read Error");
+			}
+			ROS_INFO("Received Data : %s",recv_buf);
+			handleRecievedData(recv_buf,config_pub,arm_pub);
 		}
-		ROS_INFO("Connection accepted\n");
-		int status;
-		memset(recv_buf,0x0,MAX_BUF_SIZE);
-		status = recv(conn_id,recv_buf,MAX_BUF_SIZE,0);
-		if(status <= 0)
-		{
-			ROS_INFO("Error! - Read Error");
-		}
-		ROS_INFO("Received Data : %s",recv_buf);
-		handleRecievedData(recv_buf,config_pub,arm_pub);
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
@@ -106,6 +122,31 @@ void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub)
 		ROS_INFO("sent data : %s",temp);
 		msg.data = temp;
 		arm_pub.publish(msg);
+	}
+	else if(!strcmp(type,"DRV"))
+	{
+		int written = strlen(recv_buf);
+		char temp[20]={'\0'};
+		strncpy(temp,recv_buf+4,written);
+		msg.data = temp;
+		drv_pub.publish(msg);
+	}
+	else if(!strcmp(type,"PTZ"))
+	{
+		int written = strlen(recv_buf);
+		char temp[20]={'\0'};
+		int var_arr[7] = {0};int i=0;
+		strncpy(temp,recv_buf+4,written);
+		char *pch = strtok(temp,",");
+		while(pch != NULL)
+		{
+			var_arr[i++] = atoi(pch);
+			pch = strtok(NULL,",");
+		}
+		Axis axis;
+		axis.pan = (float)var_arr[0];axis.tilt = (float)var_arr[1];axis.zoom = (float)var_arr[2];
+		axis.focus = (float)var_arr[3];axis.brightness = (float)var_arr[4];axis.iris =(float)var_arr[5];axis.autofocus =(bool)var_arr[6];
+		ptz_pub.publish(axis);
 	}
 }
 

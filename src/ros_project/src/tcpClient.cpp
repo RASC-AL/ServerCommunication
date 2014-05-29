@@ -31,10 +31,7 @@ int main (int argc, char *argv[])
 	struct sockaddr_in localAddr, servAddr;
 	struct hostent *h;
 	char buffer[1024];
-	if(argc < 3) {
-		exit(1);
-	}
-	h = gethostbyname(argv[1]);
+	h = gethostbyname("localhost");
 	if(h==NULL) {
 		exit(1);
 	}
@@ -52,6 +49,7 @@ int main (int argc, char *argv[])
   localAddr.sin_port = htons(0);
   rc = bind(sd, (struct sockaddr *) &localAddr, sizeof(localAddr));
   if(rc<0) {
+  ROS_INFO("bind failed");
     exit(1);
   }			
   rc = connect(sd, (struct sockaddr *) &servAddr, sizeof(servAddr));
@@ -65,5 +63,6 @@ int main (int argc, char *argv[])
   memset(buffer,0,sizeof(buffer));
   memcpy(&obj,buffer,sizeof(obj));
   send(sd,buffer,sizeof(obj),0);
+  ROS_INFO("data sent");
   return 0; 
 }
