@@ -3,14 +3,12 @@ import rospy
 from std_msgs.msg import String
 import serial
 
-com = serial.Serial('/dev/ttyACM1',baudrate=115200)
-com.write('a,40,90,70,105,40')
+com = serial.Serial('/dev/ttyACM0',baudrate=115200)
 def callback(data):
 	
 	rospy.loginfo(data)
 	data = 'a,'+str(data) + '\n'
 	rospy.loginfo(data)
-	print data
 	com.write(data)
 	com.flush()
 
