@@ -4,13 +4,15 @@ from std_msgs.msg import String
 import serial
 
 com = serial.Serial('/dev/ttyACM0',baudrate=115200)
+
 def callback(data):
-	
 	rospy.loginfo(data)
-	data = 'a,'+str(data) + '\n'
-	rospy.loginfo(data)
-	com.write(data)
-	com.flush()
+	if 'HOME' in str(data):
+		com.write('p')
+	else:
+		data = 'a,'+str(data) + '\n'
+		com.write(data)
+		com.flush()
 
 def controller():
 	rospy.init_node('arm')
