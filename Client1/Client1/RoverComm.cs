@@ -50,6 +50,35 @@ namespace RoboOps.HomeClient
             return true;
         }
 
+        public String reading()
+        {
+            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            //Attempt a connection
+            String ret = String.Empty;
+            try
+            {
+                sck.Connect(localEndPoint);
+
+                byte[] data = Encoding.ASCII.GetBytes("get");
+                sck.Send(data);
+                sck.Receive(data);
+                ret = Encoding.UTF8.GetString(data);
+            }
+            catch (Exception e)
+            {
+                //if connections fails 
+                Console.Write("Unable to connect to remote end point!\r\n");
+                Console.WriteLine(e.GetBaseException());
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                sck.Close();
+            }
+            return ret;
+        }
+
         public bool send(string[] msgs)
         {
             sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
