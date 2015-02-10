@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/sbrover/catkin_ws/src/usb_cam_test/build/devel/setup.sh

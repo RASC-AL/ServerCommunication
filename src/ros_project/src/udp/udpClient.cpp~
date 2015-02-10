@@ -1,0 +1,46 @@
+#include "gprot_cl.h"
+int main (int argc, char *argv[]) 
+{
+	ros::init(argc,argv,"UDPClient");
+	ros::NodeHandle n;
+	client_sock_id = socket(SOCK_FAMILY,SOCK_TYPE,SOCK_FLAG);
+	if(client_sock_id < 0)
+	{
+		ROS_INFO("Error! - Socket Creation Error\n");
+		exit(0);
+	}
+	client_setup();
+	ROS_INFO("Waiting for data to come from lower layer\n");
+	while (ros::ok())
+	{
+		int status = -1;
+		socklen_t servAddr = sizeof(servAddr);
+		send_buf = (char *)malloc(MAX_BUF_SIZE); //
+		scanf("%s",send_buf); //take data from lower layer
+		status = sendto(server_sock_id,send_buf,strlen(send_buf)+1,0,
+				(struct sockaddr *)&servAddr,&servAddr);
+		if(status < 0)
+		{
+			ROS_INFO("Error! - Read Error");
+		}
+		ROS_INFO("Sent Data : %s",recv_buf);
+		ros::spinOnce();
+		loop_rate.sleep();
+	}
+	close(client_sock_id);
+	return 0;
+}
+void client_setup()
+{
+	client_addr.sin_family = SOCK_FAMILY;
+	client_addr.sin_addr.s_addr =htonl(INADDR_ANY);
+	client_addr.sin_port = htons(CLIENT_PORT);
+	if(bind(client_socket,(struct sockaddr *)&client_addr,sizeof(client_addr)) < 0)
+    {
+        ROS_INFO("bind problem");
+		exit(1);
+    }
+	servAddr.sin_family = SOCK_FAMILY;
+	servAddr.sin_addr.s_addr = inet_addr(IP_ADDR);
+	servAddr.sin_port = htons(SERVER_PORT);
+}

@@ -1,0 +1,2 @@
+tcp ports : server 5000 , client(dummy) 5001
+udp ports : server 6000 , client (dummy) 6001
