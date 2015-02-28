@@ -13,9 +13,9 @@ speed = 20
 turn_speed = 20
 base = 144
 shoulder = 90
-elbow = 130
-wrist = 90
-scoop = 70
+elbow = 30
+wrist = 30
+scoop = 38
 
 base_min = 75
 base_max = 149
@@ -29,10 +29,11 @@ elbow_max = 180
 yaw_min = 5
 yaw_max = 175
 counter = 0
-relay = False
+relay_0 = False
+relay_1 = False
 
 def callback(data):
-	global speed, move, base, shoulder, wrist, elbow, scoop, base_min, base_max, shoulder_min, shoulder_max, elbow_min, elbow_max, yaw_min, yaw_max, counter, relay
+	global speed, move, base, shoulder, wrist, elbow, scoop, base_min, base_max, shoulder_min, shoulder_max, elbow_min, elbow_max, yaw_min, yaw_max, counter, relay_0, relay_1
 	ind = -1
 	axes = data.axes[0:2]+data.axes[3:5]
 	try:
@@ -59,17 +60,19 @@ def callback(data):
 		speed = speed + 10
 	elif ind == 4 and speed > 10:
 		speed = speed - 10
-	
+	if ind == 2:
+		relay_0 = not relay_0
+		rlyPub.publish(('1' if relay_0 else '0')+','+ ('1' if relay_1 else '0'))
 	if ind == 3:
-		relay = not relay
-		rlyPub.publish('0,'+('1' if relay else '0'))
+		relay_1 = not relay_1
+		rlyPub.publish(('1' if relay_0 else '0')+','+ ('1' if relay_1 else '0'))
 	axis = filter(lambda x:abs(x) > 0.5, axes)
 	if len(axis) > 0  or ind == 0:
 		counter = (counter + 1)%20
 		change = False
 		if ind == 0:
 			if scoop == 70:
-				scoop = 40
+				scoop = 38
 				change = True
 			else:
 				scoop = 70

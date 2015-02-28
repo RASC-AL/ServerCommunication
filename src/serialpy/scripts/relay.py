@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import String
 import serial
 
-com = serial.Serial('/dev/ttyACM0',baudrate=115200)
+com = serial.Serial('/dev/ttyS0',baudrate=115200)
 
 def callback(data):
         data = 'r,'+str(data) + '\n'
