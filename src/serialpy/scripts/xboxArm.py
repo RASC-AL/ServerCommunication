@@ -74,10 +74,10 @@ def callback(data):
 	elif ind==1:
 		scoop = 0
 	rospy.sleep(.0625-(rospy.get_time()-now))
-        armPub.publish(str(int(elbow))+','+str(int(shoulder))+','+str(int(base))+','+str(int(wrist))+','+str(int(scoop))+',')
+        armPub.publish('l'+str(int(elbow))+','+str(int(shoulder))+','+str(int(base))+','+str(int(wrist))+','+str(int(scoop))+',')
 
 def controller():
-        rospy.init_node('xbox', anonymous = True)
+        rospy.init_node('xboxArm', anonymous = True)
         rospy.Subscriber('joy1', Joy, callback, queue_size=1)
         rospy.spin()
 

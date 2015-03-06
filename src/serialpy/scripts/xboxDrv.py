@@ -38,7 +38,7 @@ def callback(data):
 	drvPub.publish(str(int(left_speed))+','+str(int(right_speed))+',')
 
 def controller():
-	rospy.init_node('xbox', anonymous = True)
+	rospy.init_node('xboxDrv', anonymous = True)
 	rospy.Subscriber('joy2', Joy, callback, queue_size=1)
         rospy.spin()
 
