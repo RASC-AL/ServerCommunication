@@ -1,8 +1,8 @@
-# Install script for directory: /home/sbrover/catkin_ws/src/serialpy
+# Install script for directory: /home/sbrover/Rover2015/src/serialpy
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/sbrover/catkin_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/sbrover/Rover2015/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sbrover/catkin_ws/build/serialpy/catkin_generated/installspace/serialpy.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sbrover/Rover2015/build/serialpy/catkin_generated/installspace/serialpy.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/serialpy/cmake" TYPE FILE FILES
-    "/home/sbrover/catkin_ws/build/serialpy/catkin_generated/installspace/serialpyConfig.cmake"
-    "/home/sbrover/catkin_ws/build/serialpy/catkin_generated/installspace/serialpyConfig-version.cmake"
+    "/home/sbrover/Rover2015/build/serialpy/catkin_generated/installspace/serialpyConfig.cmake"
+    "/home/sbrover/Rover2015/build/serialpy/catkin_generated/installspace/serialpyConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/serialpy" TYPE FILE FILES "/home/sbrover/catkin_ws/src/serialpy/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/serialpy" TYPE FILE FILES "/home/sbrover/Rover2015/src/serialpy/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

@@ -1,8 +1,8 @@
-prefix=/home/sbrover/catkin_ws/install
+prefix=/home/sbrover/Rover2015/install
 
 Name: serialpy
 Description: Description of serialpy
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/sbrover/catkin_ws/install/lib 
+Libs: -L/home/sbrover/Rover2015/install/lib 
 Requires: 

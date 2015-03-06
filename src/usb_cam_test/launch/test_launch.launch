@@ -1,0 +1,15 @@
+<launch>
+        <node name="joy_node1" pkg="joy" type="joy_node">
+                <param name="autorepeat_rate" value="1000" />
+                <param name="dev" type="string" value="/dev/input/js0" />
+                <remap from="joy" to="joy1"/>
+        </node>
+        <node name="joy_node2" pkg="joy" type="joy_node">
+                <param name="autorepeat_rate" value="1000" />
+                <param name="dev" type="string" value="/dev/input/js0" />
+                <remap from="joy" to="joy2"/>
+        </node>
+        <node name="xbox_arm" pkg="serialpy" type="xboxArm.py" />
+        <node name="xbox_drv" pkg="serialpy" type="xboxDrv.py" />
+        <node name="control_serial" pkg="serialpy" type="ControlSerial.py" />
+</launch>

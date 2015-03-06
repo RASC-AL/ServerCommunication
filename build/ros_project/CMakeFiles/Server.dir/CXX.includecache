@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/sbrover/catkin_ws/src/ros_project/src/gprot.h
+/home/sbrover/Rover2015/src/ros_project/src/gprot.h
 ros/ros.h
-/home/sbrover/catkin_ws/src/ros_project/src/ros/ros.h
+/home/sbrover/Rover2015/src/ros_project/src/ros/ros.h
 signal.h
 -
 std_msgs/String.h
-/home/sbrover/catkin_ws/src/ros_project/src/std_msgs/String.h
+/home/sbrover/Rover2015/src/ros_project/src/std_msgs/String.h
 sys/types.h
 -
 sys/socket.h
@@ -28,9 +28,9 @@ stdio.h
 unistd.h
 -
 
-/home/sbrover/catkin_ws/src/ros_project/src/tcpServer.cpp
+/home/sbrover/Rover2015/src/ros_project/src/tcpServer.cpp
 gprot.h
-/home/sbrover/catkin_ws/src/ros_project/src/gprot.h
+/home/sbrover/Rover2015/src/ros_project/src/gprot.h
 stdlib.h
 -
 string.h

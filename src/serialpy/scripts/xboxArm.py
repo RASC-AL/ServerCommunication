@@ -74,7 +74,7 @@ def callback(data):
 	elif ind==1:
 		scoop = 0
 	rospy.sleep(.0625-(rospy.get_time()-now))
-        armPub.publish(str(elbow)+','+str(shoulder)+','+str(base)+','+str(wrist)+','+str(scoop)+',')
+        armPub.publish(str(int(elbow))+','+str(int(shoulder))+','+str(int(base))+','+str(int(wrist))+','+str(int(scoop))+',')
 
 def controller():
         rospy.init_node('xbox', anonymous = True)

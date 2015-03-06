@@ -1,1 +1,2 @@
-ros_project:serialpy
+project/project:ros_project:serialpy
+-DCATKIN_DEVEL_PREFIX=/home/sbrover/Rover2015/devel -DCMAKE_INSTALL_PREFIX=/home/sbrover/Rover2015/install

@@ -87,8 +87,6 @@ add_dependencies(ros_project_genpy ros_project_generate_messages_py)
 list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS ros_project_generate_messages_py)
 
 
-debug_message(2 "ros_project: Iflags=${MSG_I_FLAGS}")
-
 
 if(gencpp_INSTALL_DIR AND EXISTS ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/ros_project)
   # install generated code

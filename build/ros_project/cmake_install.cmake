@@ -1,8 +1,8 @@
-# Install script for directory: /home/sbrover/catkin_ws/src/ros_project
+# Install script for directory: /home/sbrover/Rover2015/src/ros_project
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/sbrover/catkin_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/sbrover/Rover2015/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,33 +33,33 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project/cmake" TYPE FILE FILES "/home/sbrover/catkin_ws/build/ros_project/catkin_generated/installspace/ros_project-msg-paths.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project/cmake" TYPE FILE FILES "/home/sbrover/Rover2015/build/ros_project/catkin_generated/installspace/ros_project-msg-paths.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  execute_process(COMMAND "/usr/bin/python" -m compileall "/home/sbrover/catkin_ws/devel/lib/python2.7/dist-packages/ros_project")
+  execute_process(COMMAND "/usr/bin/python" -m compileall "/home/sbrover/Rover2015/devel/lib/python2.7/dist-packages/ros_project")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/sbrover/catkin_ws/devel/lib/python2.7/dist-packages/ros_project")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages" TYPE DIRECTORY FILES "/home/sbrover/Rover2015/devel/lib/python2.7/dist-packages/ros_project")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sbrover/catkin_ws/build/ros_project/catkin_generated/installspace/ros_project.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sbrover/Rover2015/build/ros_project/catkin_generated/installspace/ros_project.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project/cmake" TYPE FILE FILES "/home/sbrover/catkin_ws/build/ros_project/catkin_generated/installspace/ros_project-msg-extras.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project/cmake" TYPE FILE FILES "/home/sbrover/Rover2015/build/ros_project/catkin_generated/installspace/ros_project-msg-extras.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project/cmake" TYPE FILE FILES
-    "/home/sbrover/catkin_ws/build/ros_project/catkin_generated/installspace/ros_projectConfig.cmake"
-    "/home/sbrover/catkin_ws/build/ros_project/catkin_generated/installspace/ros_projectConfig-version.cmake"
+    "/home/sbrover/Rover2015/build/ros_project/catkin_generated/installspace/ros_projectConfig.cmake"
+    "/home/sbrover/Rover2015/build/ros_project/catkin_generated/installspace/ros_projectConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project" TYPE FILE FILES "/home/sbrover/catkin_ws/src/ros_project/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ros_project" TYPE FILE FILES "/home/sbrover/Rover2015/src/ros_project/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

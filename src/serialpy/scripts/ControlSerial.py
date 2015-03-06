@@ -15,6 +15,7 @@ def callbackDrv(data):
   if Command != "":
     Command += str(data)
     #Write to serial
+    print Command #TODO: Test using publisher
     Command = ""  
   
 def controller():

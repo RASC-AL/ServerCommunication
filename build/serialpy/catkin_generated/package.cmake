@@ -1,5 +1,5 @@
 set(_CATKIN_CURRENT_PACKAGE "serialpy")
-set(serialpy_MAINTAINER "sbrover <sbrover@todo.todo>")
+set(serialpy_MAINTAINER "sblinux <sbrover@todo.todo>")
 set(serialpy_DEPRECATED "")
 set(serialpy_VERSION "0.0.0")
 set(serialpy_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")

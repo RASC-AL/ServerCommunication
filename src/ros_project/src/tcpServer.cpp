@@ -6,10 +6,10 @@
 #include <errno.h>      // Error number definitions
 #include <termios.h>    // POSIX terminal control definitions
 #include <string>
-#include <axis_camera/Axis.h>
+//#include <axis_camera/Axis.h>
 using namespace std;
 using namespace ros;
-using namespace axis_camera;
+//using namespace axis_camera;
 ros::Publisher ptz_pub,drv_pub,rly_pub, cam_pub;
 int startSerial();
 void setParameters(struct termios tty,int fd);
@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
 	ros::Rate loop_rate(10);
 	ros::Publisher config_pub = n.advertise<std_msgs::String>("config",1000);
 	ros::Publisher arm_pub = n.advertise<std_msgs::String>("ARM",1000);
-	ptz_pub = n.advertise<axis_camera::Axis>("/cmd",1000);
+//	ptz_pub = n.advertise<axis_camera::Axis>("/cmd",1000);
 	drv_pub = n.advertise<std_msgs::String>("/DRV",1000);
 	rly_pub = n.advertise<std_msgs::String>("/RLY",1000);
 	cam_pub = n.advertise<std_msgs::String>("/configCam",1000);
@@ -161,10 +161,10 @@ void handleRecievedData(char recv_buf[],Publisher config_pub,Publisher arm_pub)
 			var_arr[i++] = atoi(pch);
 			pch = strtok(NULL,",");
 		}
-		Axis axis;
-		axis.pan = (float)var_arr[0];axis.tilt = (float)var_arr[1];axis.zoom = (float)var_arr[2];
-		axis.focus = (float)var_arr[3];axis.brightness = (float)var_arr[4];axis.autofocus =(bool)var_arr[6];
-		ptz_pub.publish(axis);
+//		Axis axis;
+//		axis.pan = (float)var_arr[0];axis.tilt = (float)var_arr[1];axis.zoom = (float)var_arr[2];
+//		axis.focus = (float)var_arr[3];axis.brightness = (float)var_arr[4];axis.autofocus =(bool)var_arr[6];
+//		ptz_pub.publish(axis);
 	}
 }
 

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "project")
+set(project_MAINTAINER "amit <amit@todo.todo>")
+set(project_DEPRECATED "")
+set(project_VERSION "0.0.0")
+set(project_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(project_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(project_BUILDTOOL_DEPENDS "catkin")

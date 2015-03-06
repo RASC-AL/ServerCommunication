@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/sbrover/catkin_ws/src/ros_project/src/tcpClient.cpp
+/home/sbrover/Rover2015/src/ros_project/src/tcpClient.cpp
 ros/ros.h
-/home/sbrover/catkin_ws/src/ros_project/src/ros/ros.h
+/home/sbrover/Rover2015/src/ros_project/src/ros/ros.h
 sys/types.h
 -
 sys/socket.h

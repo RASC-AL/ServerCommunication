@@ -171,9 +171,9 @@ add_dependencies(Client ros_project_generate_msg_cpp)
 add_executable(Server src/tcpServer.cpp)
 target_link_libraries(Server ${catkin_LIBRARIES})
 add_dependencies(Server ros_project_generate_msg_cpp)
-add_executable(Subscriber src/Subscriber.cpp)
-target_link_libraries(Subscriber ${catkin_LIBRARIES})
-add_dependencies(Subscriber ros_project_generate_msg_cpp)
+#add_executable(Subscriber src/Subscriber.cpp)
+#target_link_libraries(Subscriber ${catkin_LIBRARIES})
+#add_dependencies(Subscriber ros_project_generate_msg_cpp)
 
 #add UDP server
 #add_executable(UDPClient src/udp/udpClient.cpp)

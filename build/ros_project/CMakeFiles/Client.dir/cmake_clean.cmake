@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/Client.dir/src/tcpClient.cpp.o"
-  "/home/sbrover/catkin_ws/devel/lib/ros_project/Client.pdb"
-  "/home/sbrover/catkin_ws/devel/lib/ros_project/Client"
+  "/home/sbrover/Rover2015/devel/lib/ros_project/Client.pdb"
+  "/home/sbrover/Rover2015/devel/lib/ros_project/Client"
 )
 
 # Per-language clean rules from dependency scanning.
