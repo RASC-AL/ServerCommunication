@@ -40,11 +40,11 @@ def callback(data):
 	#arm control
     	#Base Servo left
         if data.axes[2] < 0:
-               	base += data.axes[2]/base_mod * 80;
+               	base -= data.axes[2]/base_mod * 80;
                 base = base_min if base < base_min else base
         #Base Servo right
         elif data.axes[5] < 0:
-                base -= data.axes[5]/base_mod * 80;
+                base += data.axes[5]/base_mod * 80;
                 base = base_max if base > base_max else base
         #Elbow forward and back 
         if math.fabs(data.axes[1]) > .2:

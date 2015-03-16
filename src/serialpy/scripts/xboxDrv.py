@@ -26,7 +26,7 @@ def callback(data):
 		speed_mod = 2.0
 	#Right wheel speed
 	if math.fabs(data.axes[4]) > .1:
-		right_speed = data.axes[4]/speed_mod*500+1500
+		right_speed = -data.axes[4]/speed_mod*500+1500
 	else:
 		right_speed = 1500
 	#Left wheel speed
@@ -35,7 +35,7 @@ def callback(data):
 	else:
 		left_speed = 1500
 	rospy.sleep(.0625-(rospy.get_time()-now))
-	drvPub.publish(str(int(left_speed))+','+str(int(right_speed))+',')
+	drvPub.publish(str(int(right_speed))+','+str(int(left_speed))+',')
 
 def controller():
 	rospy.init_node('xboxDrv', anonymous = True)
