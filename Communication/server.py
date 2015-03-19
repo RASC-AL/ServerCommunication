@@ -11,13 +11,6 @@ from std_msgs.msg import String
 class server:
 
 	def __init__(self, port):
-		# TODO publisher, change message type
-		self.config_pub = rospy.Publisher('config', String, queue_size = 10)
-		self.arm_pub = rospy.Publisher('ARM', String, queue_size = 10)
-		rospy.init_node('Server')
-		#rate = rospy.Rate(10)
-
-		self.messageNum = 0
 		self.client = client.client()
 		self.connections = []
 		self.port = port
@@ -54,16 +47,8 @@ class server:
 		self.client.send(data)
 
 	def receive(self):
-		msg =  self.client.receive()
-		self.messageNum = msg.num
-
-		# TODO recieved data to be published or displayed
-		smsg = String()
-		smsg.data = ""
-		config_pub.publish(smsg)
-		arm_pub.publish(smsg)
-		#print str(msg.num) + ":" + msg.sstr
-		#sys.stdout.flush()
+		print self.client.receive()
+		sys.stdout.flush()
 
 	def ping(self, hostname):
 		if self.client is None or self.addr is None:

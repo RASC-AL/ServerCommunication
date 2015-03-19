@@ -1,7 +1,5 @@
 import socket
 import sys
-import sockmessage
-import cPickle as pickle
 
 class client:
 
@@ -17,10 +15,22 @@ class client:
         self.sock.connect((host, port))
 
     def send(self, msg):
-        serialized_msg = pickle.dumps(msg, -1)
-        sent = self.sock.send(serialized_msg)
+        totalsent = 0
+        while totalsent < len(msg):
+            sent = self.sock.send(msg[totalsent:])
+            if sent == 0:
+                raise RuntimeError("socket connection broken")
+            totalsent = totalsent + sent
 
     def receive(self):
-        recieved_msg = self.sock.recv(2048)
-        msg = pickle.loads(recieved_msg)
-        return msg
+        chunks = []
+        bytes_recd = 0
+        while bytes_recd < self.MSGLEN:
+            chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, 2048))
+            if chunk == '':
+                raise RuntimeError("socket connection broken")
+            chunks.append(chunk)
+            bytes_recd = bytes_recd + len(chunk)
+            if "\n" in chunk:
+                break
+        return ''.join(chunks)
