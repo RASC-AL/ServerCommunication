@@ -11,11 +11,17 @@ from std_msgs.msg import String
 class server:
 
 	def __init__(self, port):
+		# TODO publisher, change message type
+		self.config_pub = rospy.Publisher('config', String, queue_size = 10)
+		self.arm_pub = rospy.Publisher('ARM', String, queue_size = 10)
+		rospy.init_node('Server')
+		#rate = rospy.Rate(10)
+
 		self.client = client.client()
 		self.connections = []
 		self.port = port
 		#TODO check ip
-		hostname = "127.0.0.1"
+		hostname = "128.205.54.5"
 		self.serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		#self.serv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
 		self.serv.bind((hostname, int(port)))
@@ -34,10 +40,10 @@ class server:
 					self.receive()
 				elif sock == sys.stdin:
 					# TODO check this
-					port = 9998 if self.port == '9999' else 9999
+					port = 9999
 					sstr = sys.stdin.readline()
-					msg = sockmessage.sockmessage(self.messageNum+1, sstr)
-					self.send(msg, "127.0.0.1", port)
+					msg = sstr
+					self.send(msg, "128.205.54.9", port)
 				else:
 					self.receive()
 
