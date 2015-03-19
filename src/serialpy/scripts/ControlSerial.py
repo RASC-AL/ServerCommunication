@@ -25,7 +25,7 @@ def callbackDrv(data):
     rospy.sleep(.0625-(rospy.get_time()-now))
     command_pub.publish(Command) #TODO: Test using publisher
     ser.write(Command)
-    ser.flush()
+    #ser.flush()
     Command = ""  
   
 def controller():

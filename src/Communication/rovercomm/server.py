@@ -4,16 +4,14 @@ import select
 import os
 import sys
 import client
-import sockmessage
 import rospy
 from std_msgs.msg import String
 
 class server:
-
+	
 	def __init__(self, port):
 		# TODO publisher, change message type
-		self.config_pub = rospy.Publisher('config', String, queue_size = 10)
-		self.arm_pub = rospy.Publisher('ARM', String, queue_size = 10)
+		self.config_pub = rospy.Publisher('HomeCommand', String, queue_size = 10)
 		rospy.init_node('Server')
 		#rate = rospy.Rate(10)
 
@@ -53,8 +51,10 @@ class server:
 		self.client.send(data)
 
 	def receive(self):
-		print self.client.receive()
-		sys.stdout.flush()
+ 		s = self.client.receive()
+		self.config_pub.publish(s)
+		#print self.client.receive()
+		#sys.stdout.flush()
 
 	def ping(self, hostname):
 		if self.client is None or self.addr is None:
