@@ -10,17 +10,15 @@ now = 0
 
 def callback(data):
         global now
-	command = str(data.data)
-        rospy.sleep(.0625 - (rospy.get_time() - now))
-        now = rospy.get_time()
+	command = str(data.data)        
         homeCom_pub.publish(command)
         ser.write(command)
         ser.flush()
         command = ""
 
 def serialWrite():
-	rospy.init_node('HomeSerial')
-        rospy.Subscriber('HomeCommand', String, callback)
+	rospy.init_node('SerialWrite')
+        rospy.Subscriber('HomeControl', String, callback)
         rospy.spin()
 
 if __name__ == '__main__':
