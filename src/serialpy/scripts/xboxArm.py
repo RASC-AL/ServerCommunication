@@ -70,7 +70,7 @@ def callback(data):
 	#Scoop open
 	if ind==0:
 		scoop = 1
-	#SCoop close
+	#Scoop close
 	elif ind==1:
 		scoop = 0
 	rospy.sleep(.0625-(rospy.get_time()-now))

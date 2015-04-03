@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-import serial
+import subprocess
+import os
 
 control_pub = rospy.Publisher('HomeControl', String, queue_size=1)
-command = ""
+cam_pub = rospy.Publisher('HomeCam', String, queue_size=1)
 
 def callback(data):
         command = str(data.data)
 	if(command[0] == 'l'):
         	control_pub.publish(command)
-
+        elif(command[0] == 'C'):
+	        command = command.replace('C', '')
+                cam_pub.publish(command)
+        elif(command[0] == 'R'):
+		os.spawnl(os.P_NOWAIT, 'bash /home/sbrover/start_rover.sh')
+		# subprocess.Popen('/home/sbrover/start_rover.sh') 
 def controlNode():
         rospy.init_node('ControlNode')
         rospy.Subscriber('HomeCommand', String, callback)

@@ -1,0 +1,12 @@
+<launch>
+
+	<node name="video_cap" pkg="rover2015" type="video_cap.py" />
+	<node name="comm" pkg="rover2015" type="comm_local.py" />
+	
+	<node name="image_view" pkg="image_view" type="image_view">
+		<remap from="image" to="/chatter" />
+	</node>
+	<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" />
+	<node name="gstreamer" pkg="rover2015" type="gstreamer.py" />
+
+</launch>

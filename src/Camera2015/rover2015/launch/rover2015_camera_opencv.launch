@@ -1,0 +1,8 @@
+<launch>
+
+	<node name="talker" pkg="rover2015" type="talker.py" />
+	<node name="listener" pkg="rover2015" type="listener.py" />
+	<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" />
+	<node name="gstreamer" pkg="rover2015" type="gstreamer.py" />
+	
+</launch>

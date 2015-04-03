@@ -5,7 +5,7 @@ from subprocess import call
 import rospy
 from std_msgs.msg import String
 
-temp_pub = rospy.Publisher('TEMP', String, queue_size = 10)
+temp_pub = rospy.Publisher('ReturnData', String, queue_size = 10)
 
 # Parses output from 'sensors' into a list of strings and returns this list
 # Each list item represents all the output for a particular component
