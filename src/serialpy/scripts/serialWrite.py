@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import String
 import serial
 
-#ser = serial.Serial('/dev/ttyACM0', baudrate = 115200)
+ser = serial.Serial('/dev/ttyACM0', baudrate = 115200)
 homeCom_pub = rospy.Publisher('homeTest', String, queue_size=1)
 command = ""
 now = 0
@@ -12,8 +12,8 @@ def callback(data):
         global now
 	command = str(data.data)        
         homeCom_pub.publish(command)
-#        ser.write(command)
-#       ser.flush()
+        ser.write(command)
+        #ser.flush()
         command = ""
 
 def serialWrite():

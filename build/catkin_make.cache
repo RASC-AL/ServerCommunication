@@ -1,2 +1,2 @@
-project/project:ros_project:serialpy
+Camera2015/rover2015:Communication/rovercomm:project/project:ros_project:serialpy:tempnode:usb_cam_test
 -DCATKIN_DEVEL_PREFIX=/home/sbrover/Rover2015/devel -DCMAKE_INSTALL_PREFIX=/home/sbrover/Rover2015/install

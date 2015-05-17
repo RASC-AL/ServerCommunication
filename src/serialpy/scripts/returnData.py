@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 import socket
 import rospy
+import traceback
 from std_msgs.msg import String
 
 def callback(dataS):
 	try:
-		data = str(dataS) + "\n"
+		data = dataS.data + "\n"
+		#data.replace("data: ", "")
 		print "sending data" + data
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect(("128.205.54.9", 9999))
+		sock.connect(("128.205.55.128", 9999))
 		totalsent = 0
 		while totalsent < len(data):
 			sent = sock.send(data[totalsent:])
@@ -16,8 +18,8 @@ def callback(dataS):
 				print "connection closed"
 				break
 			totalsent = totalsent + sent
-	except Exception:
-		pass
+	except Exception, e:
+		rospy.logerr(e)
 
 def returnData():
 	rospy.init_node("rover_data")
@@ -25,4 +27,7 @@ def returnData():
 	rospy.spin()
 
 if __name__ == "__main__":
-	returnData()
+	try:
+		returnData()
+	except Exception, e:
+		pass
