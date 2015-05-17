@@ -19,7 +19,7 @@ class server:
 		self.connections = []
 		self.port = port
 		#TODO check ip
-		hostname = "128.205.54.5"
+		hostname = "0.0.0.0" #"128.205.54.5"
 		self.serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		#self.serv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
 		self.serv.bind((hostname, int(port)))
@@ -34,6 +34,7 @@ class server:
 				if sock == self.serv:
 					(clientsocket, address) = self.serv.accept()
 					self.client = client.client(clientsocket)
+					self.connections.append(self.client.sock)
 					self.addr = address
 					self.receive()
 				elif sock == sys.stdin:
@@ -41,7 +42,8 @@ class server:
 					port = 9999
 					sstr = sys.stdin.readline()
 					msg = sstr
-					self.send(msg, "128.205.54.9", port)
+ 					ipAdd = socket.gethostbyname('sblinux.eng.buffalo.edu')
+					self.send(msg, ipAdd, port)
 				else:
 					self.receive()
 
