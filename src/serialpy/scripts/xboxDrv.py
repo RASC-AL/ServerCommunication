@@ -9,7 +9,7 @@ drvPub = rospy.Publisher('DRV',String, queue_size=10)
 left_speed = 0
 right_speed = 0
 
-speed_mod = 2.0
+speed_mod = 1.0
 
 def callback(data):
 	global move, left_speed, right_speed, speed_mod
@@ -25,12 +25,12 @@ def callback(data):
 	else:
 		speed_mod = 2.0
 	#Right wheel speed
-	if math.fabs(data.axes[4]) > .1:
-		right_speed = -data.axes[4]/speed_mod*500+1500
+	if math.fabs(data.axes[4]) > .2:
+		right_speed = data.axes[4]/speed_mod*500+1500
 	else:
 		right_speed = 1500
 	#Left wheel speed
-	if math.fabs(data.axes[1]) > .1:
+	if math.fabs(data.axes[1]) > .2:
 		left_speed = data.axes[1]/speed_mod*500+1500
 	else:
 		left_speed = 1500

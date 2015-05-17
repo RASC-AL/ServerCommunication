@@ -27,7 +27,7 @@ checkcamList(camList)
 
 prev_cam = 0
 cam = 0
-fps = 30
+fps = 5
 cap = cv.CaptureFromCAM(camList[cam])
 r = None
 

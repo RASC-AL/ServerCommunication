@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 from subprocess import call
-
+import time
 import rospy
 from std_msgs.msg import String
 
@@ -31,10 +31,20 @@ def parseTemp(temp):
   	index2 = temp.find("  (high = +")
   	return temp[index1:index2]
 
-if __name__ == "__main__":
+def tempnode():
   	rospy.init_node("tempnode")
-  	while 1:
-    		temperature_str = tempsense()
+	rate = rospy.Rate(4)
+  	while not rospy.is_shutdown():
+                temperature_str = tempsense()
     		temperature_str = parseTemp(temperature_str)
+                temperature_str += time.strftime(" %H:%M:%S")
+                temperature_str = 'T' + temperature_str
     		temp_pub.publish(temperature_str)
+		rate.sleep()
 
+if __name__ == "__main__":
+	try:
+		tempnode()
+	except rospy.ROSInterruptException, e:
+		pass
+               
