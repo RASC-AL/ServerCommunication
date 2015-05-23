@@ -1,19 +1,17 @@
 # sudo lsusb -v # find out iSerial for Webcams
 # udevadm info /dev/video0
 
-# CAM0: 0x0821 B5713800 Logitech, Inc. HD Webcam C910
-# CAM1: 0x0821 2B127E90 Logitech, Inc. HD Webcam C910
+#  CAM0: 0x0821 B5713800 Logitech, Inc. HD Webcam C910
+#  CAM1: 0x0821 2B127E90 Logitech, Inc. HD Webcam C910 
 # CAM2: 0x081b 88A1FB60 Logitech, Inc. Webcam C310
 # CAM3: 0x081b C9BFC420 Logitech, Inc. Webcam C310
-
-ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{idProduct}=="b221", SYMLINK+="video7"
-
+#ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{idProduct}=="b221", SYMLINK+="video7"
 # symlink
 # ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{serial}=="B5713800", SYMLINK+="video7"
 # ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{serial}=="88A1FB60", SYMLINK+="video5"
 
 ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{serial}=="2B127E90", SYMLINK+="video7"
-ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{serial}=="C9BFC420", SYMLINK+="video6"
+ENV{ID_BUS}=="usb", KERNEL=="video*", ATTRS{serial}=="B5713800", SYMLINK+="video6"
 ENV{ID_BUS}=="usb", KERNEL=="video*", ENV{DEVPATH}=="/devices/pci0000:00/0000:00:12.2/usb1/1-5*", SYMLINK+="video5"
 ENV{ID_BUS}=="usb", KERNEL=="video*", ENV{DEVPATH}=="/devices/pci0000:00/0000:00:12.2/usb1/1-4*", SYMLINK+="video4"
 

@@ -21,7 +21,7 @@ class server:
 		#TODO check ip
 		hostname = "0.0.0.0" #"128.205.54.5"
 		self.serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		#self.serv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR)
+		self.serv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		self.serv.bind((hostname, int(port)))
 		self.serv.listen(10)
 		self.connections.append(self.serv)
@@ -29,23 +29,29 @@ class server:
 
 	def start(self):
 		while True:
-			readsock, writesock, errsock = select.select(self.connections, [], [])
-			for sock in readsock:
-				if sock == self.serv:
-					(clientsocket, address) = self.serv.accept()
-					self.client = client.client(clientsocket)
-					self.connections.append(self.client.sock)
-					self.addr = address
-					self.receive()
-				elif sock == sys.stdin:
-					# TODO check this
-					port = 9999
-					sstr = sys.stdin.readline()
-					msg = sstr
- 					ipAdd = socket.gethostbyname('sblinux.eng.buffalo.edu')
-					self.send(msg, ipAdd, port)
-				else:
-					self.receive()
+			try:
+				readsock, writesock, errsock = select.select(self.connections, [], [])
+				for sock in readsock:
+					if sock == self.serv:
+						(clientsocket, address) = self.serv.accept()
+						self.client = client.client(clientsocket)
+						self.connections.append(self.client.sock)
+						self.addr = address
+						self.receive()
+					elif sock == sys.stdin:
+						# TODO check this
+						port = 9999
+						sstr = sys.stdin.readline()
+						msg = sstr
+ 						ipAdd = socket.gethostbyname('sblinux.eng.buffalo.edu')
+						self.send(msg, ipAdd, port)
+					else:
+						self.receive()
+			except Exception, e:
+				rospy.logerr(e)
+				#TODO check this
+				self.connections.remove(self.client.sock)
+				self.client = None
 
 	def send(self, data, host, port):
 		self.client = client.client()
@@ -53,7 +59,11 @@ class server:
 		self.client.send(data)
 
 	def receive(self):
+		if self.client is None:
+			rospy.logerr('client connection not established')
+			return
  		s = self.client.receive()
+		rospy.logerr('message recieved : ' + s)
 		self.config_pub.publish(s)
 		#print self.client.receive()
 		#sys.stdout.flush()

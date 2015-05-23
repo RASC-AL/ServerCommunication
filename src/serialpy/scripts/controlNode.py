@@ -9,10 +9,10 @@ cam_pub = rospy.Publisher('HomeCam', String, queue_size=1)
 
 def callback(data):
         command = str(data.data)
-	if(command[0] == 'l'):
+        if(command[0] == 'l'):
         	control_pub.publish(command)
         elif(command[0] == 'C'):
-	        command = command.replace('C', '')
+                command = command.replace('C', '')
                 cam_pub.publish(command)
         elif(command[0] == 'R'):
 		os.spawnl(os.P_NOWAIT, 'bash /home/sbrover/start_rover.sh')

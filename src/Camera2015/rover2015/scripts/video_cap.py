@@ -16,7 +16,7 @@ def checkcamList(camList):
     devices = stream.read().split()
     for i in camList:
         if '/dev/video' + str(i) not in devices:
-            warnings.warn('/dev/video' + str(i) + ' does not exits!')
+            warnings.warn('/dev/video' + str(i) + ' does not exist!')
             
 # see my-webcam.rules for cameras mapping
 # 0->video7, 1->video6, ...
@@ -27,7 +27,7 @@ checkcamList(camList)
 
 prev_cam = 0
 cam = 0
-fps = 5
+fps = 15
 cap = cv.CaptureFromCAM(camList[cam])
 r = None
 
