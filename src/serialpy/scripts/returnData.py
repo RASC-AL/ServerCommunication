@@ -6,6 +6,10 @@ from std_msgs.msg import String
 
 baseSocket = None
 
+#communication: mothod for sending data across to base. This socket is only meant for sending data to the base. 
+#baseSocket is None when connections isn't present and it is set to the socket when connection is established
+#The socket used for receiving data is in server.py. The sockets are kept separate because this node cannot access 
+#the socket in the server.
 def callback(dataS):
 	try:
 		global baseSocket
@@ -30,6 +34,7 @@ def callback(dataS):
 		#baseSocket.close()
 		baseSocket = None
 
+#communication: this node subscribes to a topic and sends across whatever data it receives
 def returnData():
 	rospy.init_node("rover_data")
 	rospy.Subscriber('ReturnData', String, callback)

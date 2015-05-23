@@ -1,6 +1,7 @@
 import socket
 import sys
 
+#communication: holder class for socket, contains the socket and the receive function
 class client:
 
     MSGLEN = 4096

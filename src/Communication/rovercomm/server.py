@@ -7,6 +7,9 @@ import client
 import rospy
 from std_msgs.msg import String
 
+#communication: server code. This class holds a client object which is set to None, when we have a connection established to the base  
+#the client holds the socket. This socket is only used for recieving data from the base. The socket meant for sending data is present 
+#in returnData.py in serial package. This is because the server and the returnData are running as separate nodes.
 class server:
 	
 	def __init__(self, port):
@@ -25,7 +28,6 @@ class server:
 		self.serv.bind((hostname, int(port)))
 		self.serv.listen(10)
 		self.connections.append(self.serv)
-		self.connections.append(sys.stdin)
 
 	def start(self):
 		while True:
@@ -38,13 +40,6 @@ class server:
 						self.connections.append(self.client.sock)
 						self.addr = address
 						self.receive()
-					elif sock == sys.stdin:
-						# TODO check this
-						port = 9999
-						sstr = sys.stdin.readline()
-						msg = sstr
- 						ipAdd = socket.gethostbyname('sblinux.eng.buffalo.edu')
-						self.send(msg, ipAdd, port)
 					else:
 						self.receive()
 			except Exception, e:
@@ -58,6 +53,8 @@ class server:
 		self.client.connect(host, port)
 		self.client.send(data)
 
+	#communication: this method receives data from the base and then publishes it over a topic where 
+	#the data is parsed and operated on
 	def receive(self):
 		if self.client is None:
 			rospy.logerr('client connection not established')
