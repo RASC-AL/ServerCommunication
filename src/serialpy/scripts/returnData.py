@@ -16,14 +16,14 @@ def callback(dataS):
 		
 		if baseSocket is None:
 			rospy.loginfo("creating new socket")
-			baseSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			baseSocket.settimeout(1)
-			baseSocket.connect(("128.205.55.128", 9999))
+			baseSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			#baseSocket.settimeout(1)
+			#baseSocket.connect(("128.205.55.128", 9999))
 		rospy.loginfo("socket initialized")
 		data = dataS.data + "\n"
 		totalsent = 0
 		while totalsent < len(data):
-			sent = baseSocket.send(data[totalsent:])
+			sent = baseSocket.sendto(data[totalsent:], ('128.205.55.128', 9999))
 			if sent == 0:
 				break
 			totalsent = totalsent + sent
