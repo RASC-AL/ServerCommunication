@@ -3,6 +3,7 @@
 *.swp
 *.o
 *.pyc
+.*.sw*
 
 !.gitignore
 
