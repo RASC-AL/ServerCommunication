@@ -17,7 +17,8 @@ def callback(dataS):
 		if baseSocket is None:
 			rospy.loginfo("creating new socket")
 			baseSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			baseSocket.connect(("128.205.55.128", 9999), 1)
+			baseSocket.settimeout(1)
+			baseSocket.connect(("128.205.55.128", 9999))
 		rospy.loginfo("socket initialized")
 		data = dataS.data + "\n"
 		totalsent = 0
