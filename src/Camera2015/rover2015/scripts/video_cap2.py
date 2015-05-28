@@ -28,13 +28,15 @@ cmd = ""
 pro = 0
 
 def getCommand():
-   #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240', '!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+    rospy.logerr("Current cam:"+str(cam))
+    return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+    #return ['gst-launch-1.0', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw, format=YUV2, width=320, height=240','!', 'videoconvert', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+
     #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240,framerate=15/1', '!', 'ffmpegcolorspace', '!', 'x264enc', 'tune=zerolatency', 'byte-stream=true', 'bitrate=3000', 'threads=2', '!', 'rtph264pay', '!', 'udpsink', 'host=128.205.55.128', 'port=1234', 'sync=false'] 
    #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video5', '!', 'video/x-raw-yuv,width=320,height=240,framerate=10/1', '!', 'ffenc_mpeg4', '!', 'rtpmp4vpay', 'send-config=true', '!', 'udpsink', 'host=128.205.55.128', 'port=5632']
-
-    return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate=15/1', '!', 'ffenc_mpeg4', '!', 'rtpmp4vpay', 'send-config=true', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', '', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=22000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112']
-
-
+   #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240', '!', 'ffmpegcolorspace', '!', 'theoraenc', '!', 'rtptheorapay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+    #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate=15/1', '!', 'ffenc_mpeg4', '!', 'rtpmp4vpay', 'send-config=true', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=22000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112']
+    
 
 def checkcamList(camList):
     stream=os.popen("ls /dev/video*")

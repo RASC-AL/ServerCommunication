@@ -26,14 +26,14 @@ def callback(data):
 		speed_mod = 2.0
 	#Right wheel speed
 	if math.fabs(data.axes[4]) > .2:
-		right_speed = data.axes[4]/speed_mod*500+1500
+		right_speed = data.axes[4]/speed_mod*127+127
 	else:
-		right_speed = 1500
+		right_speed = 127
 	#Left wheel speed
 	if math.fabs(data.axes[1]) > .2:
-		left_speed = data.axes[1]/speed_mod*500+1500
+		left_speed = data.axes[1]/speed_mod*127+127
 	else:
-		left_speed = 1500
+		left_speed = 127
 	rospy.sleep(.0625-(rospy.get_time()-now))
 	drvPub.publish(str(int(right_speed))+','+str(int(left_speed))+',')
 

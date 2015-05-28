@@ -84,8 +84,8 @@ def callback(data):
 		scoop = 0
         #Drop position (X)
         elif ind==2 and flag==0:
-            elbow = 1075.0
-            shoulder = 1025.0
+            elbow = 1194.0
+            shoulder = 1000.0
             flag = 2
             dropNow = time.time()
         #Home position (Y)
@@ -97,7 +97,7 @@ def callback(data):
         armPub.publish('l'+str(int(elbow))+','+str(int(shoulder))+','+str(int(base))+','+str(int(wrist))+','+str(int(scoop))+',')
 
         if flag==2 and time.time() - dropNow > 10:
-            base = 1850.0
+            base = 1724.0
             flag = 0
         elif ind==3:
             pass
