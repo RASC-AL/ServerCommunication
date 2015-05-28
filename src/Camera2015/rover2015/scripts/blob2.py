@@ -50,8 +50,23 @@ def talker():
     #cap2.set(3,320)
     #cap2.set(4,240)
     #cap2.set(cv.CV_CAP_PROP_FPS,5)
-
-    lower_blue = np.array([80,100,60])
+    
+    #new
+    lower_blue = np.array([100,140,120])
+    upper_blue = np.array([125,255,255])
+    lower_green = np.array([45,50,100])
+    upper_green = np.array([65,255,255])
+    lower_red=np.array([173,120,100])
+    upper_red=np.array([180,255,255])
+    lower_orange=np.array([0,150,160])
+    upper_orange=np.array([19,255,255])
+    lower_yellow=np.array([20,95,80])
+    upper_yellow=np.array([30,255,255])
+    lower_violet=np.array([135,115,75])
+    upper_violet=np.array([170,255,255])
+    
+    #old
+    '''lower_blue = np.array([80,100,60])
     upper_blue = np.array([120,255,255])
     lower_green = np.array([50,90,0])
     upper_green = np.array([75,255,255])
@@ -63,12 +78,13 @@ def talker():
     upper_yellow=np.array([35,255,255])
     lower_violet=np.array([135,160,60])
     upper_violet=np.array([155,255,255])
-
+'''
     
 
     while ((not rospy.is_shutdown())):
         if cam<2:
 		flag = 0
+                time.sleep(2)
 
 		cap1=cv2.VideoCapture(4)
 		#cap1.set(18,3000)
