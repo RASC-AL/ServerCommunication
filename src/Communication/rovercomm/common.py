@@ -7,3 +7,8 @@ def pad(message, length=MSGLEN):
 	tokens = [' ' for x in range(pad_len)]
 	
 	return message + ''.join(tokens)
+
+if __name__ == '__main__':
+	ret = pad('hello')
+
+	assert len(ret) == MSGLEN
