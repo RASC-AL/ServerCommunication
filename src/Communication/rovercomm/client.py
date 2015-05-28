@@ -19,7 +19,7 @@ class client:
 
     def send(self, msg):
         totalsent = 0
-		msg = pad(msg)
+        msg = pad(msg)
         while totalsent < len(msg):
             sent = self.sock.send(msg[totalsent:])
             if sent == 0:
@@ -30,13 +30,13 @@ class client:
         chunks = []
         bytes_recd = 0
         while bytes_recd < MSGLEN:
-            chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, MSGLEN))
+            chunk = self.sock.recv(min(MSGLEN - bytes_recd, MSGLEN))
             if chunk == '':
                 raise RuntimeError("socket connection broken")
-	    rospy.logerr('chunk : ' + chunk)
+            rospy.logerr('chunk : ' + chunk)
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
-		retval = ''.join(chunks)
-		assert len(retval) == MSGLEN, 'Received message length did not match MSGLEN! %d != %d' % (len(retval), MSGLEN)
-		return retval
+        retval = ''.join(chunks)
+        assert len(retval) == MSGLEN, 'Received message length did not match MSGLEN! %d != %d' % (len(retval), MSGLEN)
+        return retval
 

@@ -13,7 +13,6 @@ from common import *
 #the client holds the socket. This socket is only used for recieving data from the base. The socket meant for sending data is present 
 #in returnData.py in serial package. This is because the server and the returnData are running as separate nodes.
 class server:
-	
 	def __init__(self, port):
 		# TODO publisher, change message type
 		self.config_pub = rospy.Publisher('HomeCommand', String, queue_size = 10)
