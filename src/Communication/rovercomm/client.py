@@ -1,5 +1,7 @@
+#!/usr/bin/env python
 import socket
 import sys
+import rospy
 
 from common import *
 
@@ -31,6 +33,7 @@ class client:
             chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, MSGLEN))
             if chunk == '':
                 raise RuntimeError("socket connection broken")
+	    rospy.logerr('chunk : ' + chunk)
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
 		retval = ''.join(chunks)
