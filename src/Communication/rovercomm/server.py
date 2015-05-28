@@ -60,6 +60,9 @@ class server:
 			rospy.logerr('client connection not established')
 			return
  		s = self.client.receive()
+		if s is None:
+			rospy.logerr('message was None')
+			return
 		rospy.logerr('message recieved : ' + s)
 		self.config_pub.publish(s)
 		#print self.client.receive()
