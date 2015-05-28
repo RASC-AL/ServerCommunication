@@ -20,13 +20,16 @@ def callback(dataS):
 			#baseSocket.settimeout(1)
 			#baseSocket.connect(("128.205.55.128", 9999))
 		rospy.loginfo("socket initialized")
-		data = dataS.data + "\n"
-		totalsent = 0
-		while totalsent < len(data):
-			sent = baseSocket.sendto(data[totalsent:], ('128.205.55.128', 9999))
-			if sent == 0:
-				break
-			totalsent = totalsent + sent
+		data = dataS.data
+		if len(data) == 0:
+			return
+		#totalsent = 0
+		#while totalsent < len(data):
+		sent = baseSocket.sendto(data, ('128.205.55.128', 9999))
+		rospy.logerr('sent data : size => ' + str(sent) + " " + data)
+			#if sent == 0:
+				#break
+			#totalsent = totalsent + sent
 		rospy.loginfo("sent data: " + data)
 	except Exception, e:
 		rospy.logerr(e)
