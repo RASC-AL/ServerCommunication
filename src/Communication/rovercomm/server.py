@@ -7,6 +7,8 @@ import client
 import rospy
 from std_msgs.msg import String
 
+from common import *
+
 #communication: server code. This class holds a client object which is set to None, when we have a connection established to the base  
 #the client holds the socket. This socket is only used for recieving data from the base. The socket meant for sending data is present 
 #in returnData.py in serial package. This is because the server and the returnData are running as separate nodes.

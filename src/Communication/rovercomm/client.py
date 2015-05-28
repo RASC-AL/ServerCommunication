@@ -1,10 +1,10 @@
 import socket
 import sys
 
+from common import *
+
 #communication: holder class for socket, contains the socket and the receive function
 class client:
-
-    MSGLEN = 4096
 
     def __init__(self, sock=None):
         if sock is None:
@@ -17,6 +17,7 @@ class client:
 
     def send(self, msg):
         totalsent = 0
+		msg = pad(msg)
         while totalsent < len(msg):
             sent = self.sock.send(msg[totalsent:])
             if sent == 0:
@@ -26,15 +27,13 @@ class client:
     def receive(self):
         chunks = []
         bytes_recd = 0
-        while bytes_recd < self.MSGLEN:
-            chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, 2048))
+        while bytes_recd < MSGLEN:
+            chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, MSGLEN))
             if chunk == '':
                 raise RuntimeError("socket connection broken")
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
-            if "\n" in chunk:
-                assert chunk[-1] == '\n'
-                break
 		retval = ''.join(chunks)
-		assert retval.count('\n') == 1
+		assert len(retval) == MSGLEN, 'Received message length did not match MSGLEN! %d != %d' % (len(retval), MSGLEN)
 		return retval
+
