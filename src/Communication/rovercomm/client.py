@@ -33,5 +33,8 @@ class client:
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
             if "\n" in chunk:
+                assert chunk[-1] == '\n'
                 break
-        return ''.join(chunks)
+		retval = ''.join(chunks)
+		assert retval.count('\n') == 1
+		return retval
