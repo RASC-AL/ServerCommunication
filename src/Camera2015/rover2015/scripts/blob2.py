@@ -86,14 +86,14 @@ def talker():
 		flag = 0
                 time.sleep(2)
 
-		cap1=cv2.VideoCapture(4)
+		cap1=cv2.VideoCapture(5)
 		#cap1.set(18,3000)
 		#cap1.set(18,320)
 		#cap1.set(19,320)
 		_,frame1=cap1.read()
 		cap1.release()
 
-		cap2=cv2.VideoCapture(5)
+		cap2=cv2.VideoCapture(4)
 		_,frame2=cap2.read()
 		cap2.release()
 

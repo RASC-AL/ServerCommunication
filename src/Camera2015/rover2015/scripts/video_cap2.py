@@ -21,6 +21,7 @@ from conf import HOME_IP
 # camList = [7,6,5,4]
 from conf import camList, audioList
 
+prev_fps = 15
 prev_cam = 0
 cam = 0
 fps = 15
@@ -28,8 +29,11 @@ cmd = ""
 pro = 0
 
 def getCommand():
-    rospy.logerr("Current cam:"+str(cam))
-    return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+    rospy.logerr('fps : ' + str(fps))
+    #rospy.logerr("Current cam:"+str(cam))
+    return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate='+str(fps)+'/1', '!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'sync=false', 'async=false', 'host=128.205.55.128', 'port=5632', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=8000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112', 'sync=false', 'async=false']
+    #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
+    #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!','video/x-raw-yuv,width=320,height=240,framerate='+str(fps)+'/1','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=22000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112']
     #return ['gst-launch-1.0', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw, format=YUV2, width=320, height=240','!', 'videoconvert', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
 
     #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240,framerate=15/1', '!', 'ffmpegcolorspace', '!', 'x264enc', 'tune=zerolatency', 'byte-stream=true', 'bitrate=3000', 'threads=2', '!', 'rtph264pay', '!', 'udpsink', 'host=128.205.55.128', 'port=1234', 'sync=false'] 
@@ -46,6 +50,7 @@ def checkcamList(camList):
             warnings.warn('/dev/video' + str(i) + ' does not exist!')
 
 def callback_config(msg):
+    global prev_fps
     global prev_cam
     global cam
     global fps
@@ -54,7 +59,7 @@ def callback_config(msg):
     s = str(msg.data).split(',')
     cam = int(s[0])
     fps = int(s[1])
-    if cam != prev_cam and cam in range(len(camList)):
+    if ((cam != prev_cam and cam in range(len(camList))) or (fps != prev_fps)):
 	if cam > 1:
             rospy.sleep(2.)
         rospy.logerr('killing curent camera')
@@ -63,6 +68,7 @@ def callback_config(msg):
         rospy.logerr('starting new camera')
         pro = sub.Popen(getCommand(), stdout = sub.PIPE, stderr = sub.PIPE)
         prev_cam = cam
+	prev_fps = fps
     
 def listener():
     rospy.init_node('talker', anonymous=True)
