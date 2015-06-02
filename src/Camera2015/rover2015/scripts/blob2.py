@@ -15,13 +15,16 @@ from subprocess import call
 import re
 
 cam = 0
+rate = 5
 
 def callback(data):
     command = str(data.data)
     global cam 
+    global rate
     cam = int(command[0])
-    test = rospy.Publisher('blob_test', String, queue_size = 1)
-    test.publish(str(cam))
+    tokens = command.split(',')
+    # Rate is the last token
+    rate = int(tokens[-1])
     #print command
 
 def talker():
@@ -222,7 +225,7 @@ def talker():
 		pub_flag.publish(data)
 		#print flag
 
-		cv2.waitKey(2000)
+		cv2.waitKey(rate * 1000)
 
 
 if __name__ == '__main__':
