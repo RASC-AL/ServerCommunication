@@ -64,8 +64,7 @@ def callback_config(msg):
 	if cam > 1:
             rospy.sleep(2.)
         rospy.logerr('killing curent camera')
-        #os.killpg(pro.pid, signal.SIGTERM)
-	pro.terminate()
+	pro.kill()
         pro = sub.Popen(getCommand(), stdout = sub.PIPE, stderr = sub.PIPE)
         rospy.logerr('starting camera')
         prev_cam = cam
