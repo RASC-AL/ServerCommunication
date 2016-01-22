@@ -5,7 +5,8 @@ import time
 from sensor_msgs.msg import Joy
 from std_msgs.msg import String
 
-armPub = rospy.Publisher('ARM',String, queue_size=1)
+armPub = rospy.Publisher('ARM', String, queue_size = 1)
+drvPub = rospy.Publisher('DRV', String, queue_size = 1)
 
 base = 1500.0
 elbow = 1100.0
@@ -92,6 +93,10 @@ def callback(data):
         elif ind==3 and flag == 0:
             flag = 3
             pass
+        elif ind==4:  
+            drvPub.publish('STOP')
+        elif ind==5:
+            drvPub.publish('GO')
 
 	rospy.sleep(.0625-(rospy.get_time()-now))
         armPub.publish('l'+str(int(elbow))+','+str(int(shoulder))+','+str(int(base))+','+str(int(wrist))+','+str(int(scoop))+',')
