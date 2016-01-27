@@ -95,7 +95,7 @@ def callback(data):
             pass
         elif ind==4:  
             drvPub.publish('STOP')
-        elif ind==5:
+        elif ind==13:
             drvPub.publish('GO')
 
 	rospy.sleep(.0625-(rospy.get_time()-now))

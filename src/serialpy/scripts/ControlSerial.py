@@ -23,8 +23,8 @@ def callbackDrv(data):
 
   if Command != "":
     drvCommand = data.data
-    if drvCommand == 'STOP':
-        driveAllowed = False
+    if drvCommand == 'STOP' or (drvCommand != 'GO' and not driveAllowed):
+        driveAllowed = False 
         Command += '127,127,'
         Command = Command.replace("data: ", "")
         ser.write(Command)
@@ -32,7 +32,7 @@ def callbackDrv(data):
     elif driveAllowed == False and drvCommand == 'GO':
         driveAllowed = True
         Command = ""
-    elif driveAllowed == True:
+    elif driveAllowed == True and drvCommand != 'GO':
         Command += str(drvCommand)
         #Write to serial
         Command = Command.replace("data: ", "")
@@ -40,7 +40,7 @@ def callbackDrv(data):
         command_pub.publish(Command) #TODO: Test using publisher
         ser.write(Command)
         Command = ""  
-  
+
 def controller():
   rospy.init_node("ControlSerial")
   rospy.Subscriber('ARM', String, callbackArm)
