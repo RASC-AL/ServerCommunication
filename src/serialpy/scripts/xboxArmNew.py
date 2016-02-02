@@ -11,8 +11,8 @@ class ArmController:
         self.armPub = rospy.Publisher('ARM', String, queue_size = 1)
         self.testPub = rospy.Publisher('ArmTest', String, queue_size = 1)   
         self.x = 0.0
-        self.y = 0.1332
-        self.z = 0.1589
+        self.y = 0.3070
+        self.z = 0.3732
 
         self.coord_mod = 50
 
@@ -94,24 +94,27 @@ class ArmController:
 
             #To find the angle of the elbow
             #Parameters
-            k = 2 * z * link2
-            l = 2 * x * link2 / math.cos(base_angle)
-            m = link1 * link1 - z * z - link2 * link2 - x * x / (math.cos(base_angle) * math.cos(base_angle));
             
-            elbow_angle = 2 * math.atan2(-k + math.sqrt(k * k - m * m + l * l), m - l);
+            #Cosine component
+            cosNum = x * x + y * y + z * z - link1 * link1 - link2 * link2
+            cosDenom = 2 * link1 * link2
+            cosValue = cosNum / cosDenom
+
+            #Sine Component
+            sinValue = -math.sqrt(1 - cosValue * cosValue)
+            
+            elbow_angle = math.atan2(sinValue, cosValue);
 
             #To find the angle of the shoulder
-            shoulder_angle = math.atan2(z - link2 * math.sin(elbow_angle), x / (math.cos(base_angle) - link2 * math.cos(elbow_angle)));
-
-            self.testPub.publish(str(base_angle) + ' ' + str(shoulder_angle) + ' ' + str(elbow_angle))
+            shoulder_angle = math.atan2(z, math.sqrt(x * x + y * y)) - math.atan2(link2 * sinValue, link1 + link2 * cosValue);
 
             #Convert the angles from radians to degree
             base_angle = base_angle*180/math.pi;
             shoulder_angle = shoulder_angle*180/math.pi;
-            elbow_angle = (-270 - elbow_angle*180/math.pi);
+            elbow_angle = -elbow_angle*180/math.pi;
 
             #TODO Need to verify values of angles at limits
-            if(base_angle < 0 or base_angle > 180 or shoulder_angle < 0 or shoulder_angle > 90 or elbow_angle < 61.5 or elbow_angle > 66.2):       
+            if(base_angle < 0 or base_angle > 180 or shoulder_angle < 0 or shoulder_angle > 90 or elbow_angle < 65.2 or elbow_angle > 151.5):       
                 raise ValueError
 
             self.x = x
@@ -121,7 +124,7 @@ class ArmController:
             #Convert angles to values of what is written to servos and actuators
             base = 1100 + 800 * (base_angle) / 180
             shoulder = 2000 - 1000 * shoulder_angle / 90
-            elbow = 2000 - 1000 * (elbow_angle - 61.5) / 4.7
+            elbow = 1000 + 1000 * (elbow_angle - 65.2) / 86.3
 
             return (base, shoulder, elbow) 
 
