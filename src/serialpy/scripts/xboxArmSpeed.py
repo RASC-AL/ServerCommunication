@@ -28,7 +28,8 @@ class ArmController:
     def callback(self, data):
         now = rospy.get_time()
 	ind = -1
-        
+        pos = False
+
         try:
             ind = data.buttons.index(1)
         except ValueError: pass
@@ -68,13 +69,27 @@ class ArmController:
 	#Scoop close
 	elif ind == 1:
 	    self.scoop = 0
+	#Drop Position (X)
+	elif ind == 2:
+	    elbow = 1194.0
+            shoulder = 1000.0
+            self.base = 1800.0
+            pos = True
+	#Home Position (Y)
+	elif ind == 3:
+	    elbow = 1100.0
+	    shoulder = 1000.0
+	    self.base = 1500.0
+	    pos = True 
         elif ind == 4:
             drvPub.publish('STOP')
         elif ind == 13:
             drvPub.publish('GO')
 
+        leadChar = 'l' if pos else 's'
+
         rospy.sleep((1 / self.instructionsPerSecond)-(rospy.get_time()-now))
-        self.armPub.publish('l'+str(int(elbow))+','+str(int(shoulder))+','+str(int(self.base))+','+str(int(self.wrist))+','+str(int(self.scoop))+',')
+        self.armPub.publish(leadChar+str(int(elbow))+','+str(int(shoulder))+','+str(int(self.base))+','+str(int(self.wrist))+','+str(int(self.scoop))+',')
        
 def controller():
     rospy.init_node('xboxArmSpeed', anonymous = True)

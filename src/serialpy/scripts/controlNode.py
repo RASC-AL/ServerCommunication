@@ -9,7 +9,7 @@ cam_pub = rospy.Publisher('HomeCam', String, queue_size=1)
 
 def callback(data):
         command = str(data.data)
-        if(command[0] == 'l'):
+        if(command[0] == 'l' or command[0] == 's'):
         	control_pub.publish(command)
         elif(command[0] == 'C'):
                 command = command.replace('C', '')
