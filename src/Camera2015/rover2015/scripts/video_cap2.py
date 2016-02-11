@@ -30,8 +30,10 @@ pro = 0
 
 def getCommand():
     rospy.logerr('fps : ' + str(fps))
-    #rospy.logerr("Current cam:"+str(cam))
-    return ['gst-launch-0.10', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate=' + str(fps) + '/1', '!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'pulsesrc','device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,width=16,depth=16,rate=8000', '!', 'amrnbenc', '!', 'rtpamrpay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112']
+    rospy.logerr("Current cam:"+str(cam))
+    
+    return['gst-launch', 'v4l2src', 'device=/dev/video0', '!', 'video/x-raw-yuv,width=640,height=480', '!',  'x264enc', 'pass=qual', 'quantizer=20', 'tune=zerolatency', '!', 'rtph264pay', '!', 'udpsink', 'host=128.205.55.104', 'port=1234']
+    #return ['gst-launch-0.10', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate=' + str(fps) + '/1', '!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.104', 'port=5632', 'pulsesrc','device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,width=16,depth=16,rate=8000', '!', 'amrnbenc', '!', 'rtpamrpay', '!', 'udpsink', 'host=128.205.55.104', 'port=6112']
     #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!', 'video/x-raw-yuv,width=320,height=240,framerate='+str(fps)+'/1', '!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'sync=false', 'async=false', 'host=128.205.55.128', 'port=5632', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=8000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112', 'sync=false', 'async=false']
     #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'video/x-raw-yuv,width=320,height=240','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false']
     #return ['gst-launch-0.10', '-v', 'v4l2src', 'device=/dev/video' + str(camList[cam]), '!', 'videorate', '!','video/x-raw-yuv,width=320,height=240,framerate='+str(fps)+'/1','!', 'ffmpegcolorspace', '!', 'jpegenc', '!', 'rtpjpegpay', '!', 'udpsink', 'host=128.205.55.128', 'port=5632', 'sync=false', 'pulsesrc', 'device=' + audioList[cam], '!', 'audioconvert', '!', 'audio/x-raw-int,channels=1,depth=16,width=16,rate=22000', '!', 'rtpL16pay', '!', 'udpsink', 'host=128.205.55.128', 'port=6112']
@@ -56,7 +58,7 @@ def callback_config(msg):
     global cam
     global fps
     global pro
-    rospy.logerr('camera change message' + str(msg.data))
+    rospy.logerr('camera change message ' + str(msg.data))
     s = str(msg.data).split(',')
     cam = int(s[0])
     fps = int(s[1])
