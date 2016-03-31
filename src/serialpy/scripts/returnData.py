@@ -25,7 +25,7 @@ def callback(dataS):
 			return
 		#totalsent = 0
 		#while totalsent < len(data):
-		sent = baseSocket.sendto(data, ('128.205.55.128', 9999))
+		sent = baseSocket.sendto(data, ('128.205.55.104', 9999))
 		#rospy.logerr('sent data : size => ' + str(sent) + " " + data)
 			#if sent == 0:
 				#break

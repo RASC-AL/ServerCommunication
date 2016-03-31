@@ -16,6 +16,6 @@
         <node name="rover_server" pkg="rovercomm" type="testserv.py" />
         <node name="temp_node" pkg="tempnode" type="temp.py" />
 	<node name="roverdata" pkg="serialpy" type="returnData.py" />
-	<node name="blob" pkg="rover2015" type="blob2.py" /> 
+<!--	<node name="blob" pkg="rover2015" type="blob2.py" /> -->
 
 </launch>

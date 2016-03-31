@@ -35,7 +35,7 @@ def callback(data):
 	else:
 	    left_speed = 127
 	rospy.sleep(.0625-(rospy.get_time()-now))
-	drvPub.publish(str(int(right_speed))+','+str(int(left_speed))+',')
+	drvPub.publish(str(int(right_speed))+','+str(int(left_speed)))
 
 def controller():
 	rospy.init_node('xboxDrv', anonymous = True)

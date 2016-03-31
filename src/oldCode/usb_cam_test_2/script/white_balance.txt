@@ -1,0 +1,3 @@
+//change device ids, check white balance outdoors
+v4l2-ctl -d 0 --set-ctrl white_balance_temperature_auto=0
+v4l2-ctl -d 0 --set-ctrl white_balance_temperature=3000

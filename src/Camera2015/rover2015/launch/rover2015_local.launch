@@ -10,7 +10,8 @@
                 <remap from="joy" to="joy2"/>
         </node>
         <node name="xbox_arm" pkg="serialpy" type="xboxArm.py" /> 
-        <!--<node name="xbox_arm_new" pkg="serialpy" type="xboxArmNew.py" /> --> 
+        <!--<node name="xbox_arm_speed" pkg="serialpy" type="xboxArmSpeed.py" /> -->
+        <!--<node name="xbox_arm_new" pkg="serialpy" type="xboxArmNew.py" /> -->
         <node name="xbox_drv" pkg="serialpy" type="xboxDrv.py" />
         <node name="control_serial" pkg="serialpy" type="ControlSerial.py" />
         <node name="serial_read" pkg="serialpy" type="serialRead.py" />

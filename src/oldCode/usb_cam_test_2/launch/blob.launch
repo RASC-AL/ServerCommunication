@@ -1,0 +1,23 @@
+<launch>
+	<!-- <node name="axis_publish" pkg="axis_camera" type="axis.py" />
+	<node name="axis_ptz" pkg="axis_camera" type="axis_ptz.py" />
+	<node name="ros_project" pkg="ros_project" type="Server" output="screen" />
+	<node name="camera_module" pkg="usb_cam_test" type="ptzbla.py" />
+	
+	<node name="arm_control" pkg="serialpy" type="armserial.py" /> 
+	<node name="drv_control" pkg="serialpy" type="driveserial.py" />
+	<node name="rly_control" pkg="serialpy" type="relay.py" />
+	<node name="joy_node" pkg="joy" type="joy_node" args="/dev/input/js0" />
+	<node name="xbox_control" pkg="serialpy" type="xbox.py" />
+	<node name="exit" pkg="usb_cam_test" type="exit.py" required="true" /> -->
+	    <node name="camera" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="/dev/video0" />
+		<param name="image_width" value="1280" />
+		<param name="image_height" value="720" />
+		<param name="framerate" value="1" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="webcam" />
+	    </node>
+	<node name="blob" pkg="usb_cam_test" type="tester.py" />
+	<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen" />
+</launch>

@@ -25,7 +25,7 @@ def callbackDrv(data):
       drvCommand = data.data
       if drvCommand == 'STOP' or (drvCommand != 'GO' and not driveAllowed):
           driveAllowed = False 
-          Command += '127,127,'
+          Command += '127,127'
           Command = Command.replace("data: ", "")
           ser.write(Command)
           Command = ""  
@@ -38,7 +38,7 @@ def callbackDrv(data):
           Command = Command.replace("data: ", "")
           rospy.sleep(.0625-(rospy.get_time()-now))
           command_pub.publish(Command) 
-          #ser.write(Command)
+          ser.write(Command)
           Command = ""  
 
 def controller():

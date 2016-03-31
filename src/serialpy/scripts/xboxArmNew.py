@@ -55,18 +55,6 @@ class ArmController:
 	#Scoop close
 	elif ind==1:
 	    self.scoop = 0
-        #Drop position (X)
-        ''' 
-        elif ind==2 and flag==0:
-            x = 0
-            y = 0
-            z = 0
-            dropNow = time.time()
-        #Home position (Y)
-        elif ind==3 and flag == 0:
-            flag = 3
-            pass
-        '''
  
         jointValues = self.getJoints(tempX, tempY, tempZ)
 
@@ -74,14 +62,7 @@ class ArmController:
         if(jointValues):
             self.armPub.publish('l'+str(int(jointValues[2]))+','+str(int(jointValues[1]))+','+str(int(jointValues[0]))+','+str(int(wrist))+','+str(int(self.scoop))+',')
             #self.testPub.publish('X: ' + str(self.x) + ' Y: ' + str(self.y) + ' Z: ' + str(self.z))
-            self.testPub.publish(str(jointValues))
-        '''
-        if flag==2 and time.time() - dropNow > 10:
-            base = 1724.0
-            flag = 0
-        elif ind==3:
-            pass
-        '''
+            #self.testPub.publish(str(jointValues))
 
     def getJoints(self, x, y, z):
         link1 = 11.5 * .0254 # First link length in meters
@@ -94,27 +75,34 @@ class ArmController:
 
             #To find the angle of the elbow
             #Parameters
-            
+            #Idea for brute force solution
+            '''
+            for i in xrange(0.0, 90.0, .1):
+               for j in xrange(65.2, 151.5, .1):
+                   (x, y, z) = forward_kinematics(base_angle, i, j)
+                   if (x, y, z) is closest set closest
+            '''
+
             #Cosine component
             cosNum = x * x + y * y + z * z - link1 * link1 - link2 * link2
             cosDenom = 2 * link1 * link2
             cosValue = cosNum / cosDenom
 
             #Sine Component
-            sinValue = -math.sqrt(1 - cosValue * cosValue)
+            sinValue = math.sqrt(1 - cosValue * cosValue)
             
             elbow_angle = math.atan2(sinValue, cosValue);
 
             #To find the angle of the shoulder
-            shoulder_angle = math.atan2(z, math.sqrt(x * x + y * y)) - math.atan2(link2 * sinValue, link1 + link2 * cosValue);
+            shoulder_angle = math.atan2(z, math.sqrt(x * x + y * y)) + math.atan2(link2 * sinValue, link1 + link2 * cosValue);
 
             #Convert the angles from radians to degree
             base_angle = base_angle*180/math.pi;
-            shoulder_angle = shoulder_angle*180/math.pi;
-            elbow_angle = -elbow_angle*180/math.pi;
+            shoulder_angle = shoulder_angle * 180/math.pi;
+            elbow_angle = (math.pi - elbow_angle) * 180/math.pi;
 
             #TODO Need to verify values of angles at limits
-            if(base_angle < 0 or base_angle > 180 or shoulder_angle < 0 or shoulder_angle > 90 or elbow_angle < 65.2 or elbow_angle > 151.5):       
+            if(base_angle < 0 or base_angle > 180 or shoulder_angle < 0 or shoulder_angle > 90.0 or elbow_angle < 65.2 or elbow_angle > 151.5):  
                 raise ValueError
 
             self.x = x
@@ -125,6 +113,8 @@ class ArmController:
             base = 1100 + 800 * (base_angle) / 180
             shoulder = 2000 - 1000 * shoulder_angle / 90
             elbow = 1000 + 1000 * (elbow_angle - 65.2) / 86.3
+
+            self.testPub.publish("X: " + str(self.x) + " Y: " + str(self.y) + " Z: " + str(self.z) + " " + str(base_angle) + ' ' + str(shoulder_angle) + ' ' + str(elbow_angle))
 
             return (base, shoulder, elbow) 
 
