@@ -5,7 +5,7 @@ import subprocess
 import os
 
 control_pub = rospy.Publisher('HomeControl', String, queue_size=1)
-cam_pub = rospy.Publisher('HomeCam', String, queue_size=1)
+cam_pub = rospy.Publisher('config', String, queue_size=1)
 
 def callback(data):
         command = str(data.data)
