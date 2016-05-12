@@ -1,9 +1,9 @@
 <launch>
         <node name="video_cap2" pkg="rover2015" type="video_cap2.py" />
 
-	<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server">
+	<!--<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server">
 	<param name="port" type="int" value="8080" />
-	</node>
+	</node>-->
       
 	<node name="serial_write" pkg="serialpy" type="serialWrite.py" />
         <node name="serial_read" pkg="serialpy" type="serialRead.py" /> 

@@ -2,14 +2,17 @@
 import socket
 import rospy
 import traceback
+import imp
 from std_msgs.msg import String
 
 baseSocket = None
+homeIP = None
 
 #communication: mothod for sending data across to base. This socket is only meant for sending data to the base. 
 #baseSocket is None when connections isn't present and it is set to the socket when connection is established
 #The socket used for receiving data is in server.py. The sockets are kept separate because this node cannot access 
 #the socket in the server.
+
 def callback(dataS):
 	try:
 		global baseSocket
@@ -23,13 +26,8 @@ def callback(dataS):
 		data = dataS.data
 		if len(data) == 0:
 			return
-		#totalsent = 0
-		#while totalsent < len(data):
-		sent = baseSocket.sendto(data, ('128.205.55.104', 9999))
-		#rospy.logerr('sent data : size => ' + str(sent) + " " + data)
-			#if sent == 0:
-				#break
-			#totalsent = totalsent + sent
+
+		sent = baseSocket.sendto(data, (homeIP, 9999))
 		rospy.loginfo("sent data: " + data)
 	except Exception, e:
 		rospy.logerr(e)
@@ -40,7 +38,10 @@ def callback(dataS):
 
 #communication: this node subscribes to a topic and sends across whatever data it receives
 def returnData():
+        global homeIP
 	rospy.init_node("rover_data")
+	ipGetter = imp.load_source('ipGetter', '/home/sbrover/Rover2015/src/ipGetter.py')
+	homeIP = ipGetter.getHomeIP()
 	rospy.Subscriber('ReturnData', String, callback)
 	rospy.spin()
 
