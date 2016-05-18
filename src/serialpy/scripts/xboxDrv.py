@@ -4,17 +4,46 @@ import math
 from sensor_msgs.msg import Joy
 from std_msgs.msg import String
 
-drvPub = rospy.Publisher('DRV',String, queue_size=10)
+drvPub = rospy.Publisher('DRV',String, queue_size=1)
 
 left_speed = 0
 right_speed = 0
 
 speed_mod = 1.0
+actuatorTracker = [0, 0, 0, 0, 0]
+count = 0
 
 def callback(data):
-	global left_speed, right_speed, speed_mod
-        now = rospy.get_time()
-	ind = -1
+    global left_speed, right_speed, speed_mod, actuatorTracker, count
+    now = rospy.get_time()
+    actuatorType = actuatorTracker[-1]
+    count = 0
+    changed = False
+    try:
+        if data.buttons[6] == 1:
+            actuatorTracker[-1] = 1
+            changed = True
+        elif data.buttons[7] == 1:
+            actuatorTracker[-1] = 0
+            changed = True
+        for i in range(11, 15):
+            pressed = data.buttons[i]
+            ind = i - 11
+            if i == 12:
+                ind = 3
+            elif i == 14:
+                ind = 1
+            actuatorTracker[ind] = pressed
+            count += pressed * actuatorTracker[-1]
+            
+    except ValueError: pass
+   
+    if(count > 0 or changed):
+        movVal = data.axes[4] * 254 if math.fabs(data.axes[4]) > .2 else 0
+        actStr = 'A' + ','.join(str(x) for x in actuatorTracker) + ',' + \
+                 str(int(movVal))
+        drvPub.publish(actStr)
+    else:
 	try:
 	    ind = data.buttons.index(1)
 	except ValueError: pass

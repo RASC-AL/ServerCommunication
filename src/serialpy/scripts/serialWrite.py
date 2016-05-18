@@ -12,7 +12,7 @@ def callback(data):
         global now
 	command = str(data.data)        
         homeCom_pub.publish(command)
-        ser.write(command)
+        ser.write(command + "\n")
         #ser.flush()
         command = ""
 

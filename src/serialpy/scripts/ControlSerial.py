@@ -6,6 +6,8 @@ import serial
 Command = ""
 now = 0
 driveAllowed = True
+mode = '0'
+switch = False
 command_pub = rospy.Publisher('Command', String, queue_size=1)
 ser = serial.Serial('/dev/ttyACM0', baudrate = 115200)
 
@@ -16,18 +18,33 @@ def callbackArm(data):
       now = rospy.get_time()
       Command = str(data.data)
 
+#This is not good code clean up
 def callbackDrv(data):
-  global Command
-  global now
-  global driveAllowed 
+  global Command, now, driveAllowed, switch, mode
+
+  drvCommand = data.data
 
   if Command != "":
-      drvCommand = data.data
-      if drvCommand == 'STOP' or (drvCommand != 'GO' and not driveAllowed):
+      if drvCommand[0] == 'A':
+          rospy.logerr(drvCommand)
+          strArr = drvCommand.split(',')
+          mode = strArr[4]
+          ser.write(drvCommand + "\n")
+          Command = ""
+          switch = True
+          rospy.sleep(.0625-(rospy.get_time()-now))
+      elif switch == True and mode == '1':
+          switch = False
+          Command = "A1,1,1,1,1,0"
+          rospy.logerr(Command)
+          ser.write(Command+ "\n") 
+          Command = ""
+      elif drvCommand == 'STOP' or (drvCommand != 'GO' and not driveAllowed):
           driveAllowed = False 
           Command += '127,127'
           Command = Command.replace("data: ", "")
-          ser.write(Command)
+          rospy.logerr(Command)
+          ser.write(Command + "\n")
           Command = ""  
       elif driveAllowed == False and drvCommand == 'GO':
           driveAllowed = True
@@ -37,8 +54,8 @@ def callbackDrv(data):
           #Write to serial
           Command = Command.replace("data: ", "")
           rospy.sleep(.0625-(rospy.get_time()-now))
-          command_pub.publish(Command) 
-          ser.write(Command)
+          rospy.logerr(Command) 
+          ser.write(Command + "\n")
           Command = ""  
 
 def controller():

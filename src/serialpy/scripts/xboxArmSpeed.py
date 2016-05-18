@@ -9,6 +9,7 @@ class ArmController:
 
     def __init__(self):
         self.armPub = rospy.Publisher('ARM', String, queue_size = 1)
+        self.drvPub = rospy.Publisher('DRV', String, queue_size = 1)
         self.testPub = rospy.Publisher('ArmTest', String, queue_size = 1)   
         
         self.base = 1500.0
@@ -45,13 +46,13 @@ class ArmController:
         
         #Shoulder forward and back
         if math.fabs(data.axes[1]) > .2:
-            shoulder = data.axes[1] * 127 + 127;
+            shoulder = data.axes[1] * 254;
         else:
-            shoulder = 127
+            shoulder = 0
 
         #Wrist up and down
         if ind == 5 and math.fabs(data.axes[4]) > .2:
-            elbow = 127
+            elbow = 0
             self.wrist += data.axes[4] / self.wrist_mod * 180;
             if self.wrist > self.wrist_max:
                 self.wrist = self.wrist_max
@@ -59,9 +60,9 @@ class ArmController:
                 self.wrist = self.wrist_min
         #Elbow forward and back 
         elif math.fabs(data.axes[4]) > .2:
-            elbow = data.axes[4] * 127 + 127;
+            elbow = data.axes[4] * -254
         else:
-            elbow = 127
+            elbow = 0
 
         #Scoop open
 	if ind == 0:
@@ -82,9 +83,9 @@ class ArmController:
 	    self.base = 1500.0
 	    pos = True 
         elif ind == 4:
-            drvPub.publish('STOP')
+            self.drvPub.publish('STOP')
         elif ind == 13:
-            drvPub.publish('GO')
+            self.drvPub.publish('GO')
 
         leadChar = 'l' if pos else 's'
 

@@ -1,16 +1,9 @@
 <launch>
         <node name="video_cap2" pkg="rover2015" type="video_cap2.py" />
-
-	<!--<node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server">
-	<param name="port" type="int" value="8080" />
-	</node>-->
-      
-	<node name="serial_write" pkg="serialpy" type="serialWrite.py" />
-        <node name="serial_read" pkg="serialpy" type="serialRead.py" /> 
+        <node name="serial_write" pkg="serialpy" type="serialWrite.py" />
+        <!--<node name="serial_read" pkg="serialpy" type="serialRead.py" />-->
         <node name="control_node" pkg="serialpy" type="controlNode.py" />
         <node name="rover_server" pkg="rovercomm" type="testserv.py" />
         <node name="temp_node" pkg="tempnode" type="temp.py" />
 	<node name="roverdata" pkg="serialpy" type="returnData.py" />
-<!--	<node name="blob" pkg="rover2015" type="blob2.py" /> -->
-
 </launch>

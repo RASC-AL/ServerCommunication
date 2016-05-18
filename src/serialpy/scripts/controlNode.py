@@ -10,7 +10,8 @@ ptz_pub = rospy.Publisher('PTZ', String, queue_size = 1)
 
 def callback(data):
         command = str(data.data).rstrip()
-        if(command[0] == 'l' or command[0] == 's' or command[0] == 'P'):
+        if(command[0] == 'l' or command[0] == 's' or command[0] == 'P' \
+           or command[0] == 'A'):
         	control_pub.publish(command)
         	if(command[0] == 'P'):
         	    ptz_pub.publish(command[-1])

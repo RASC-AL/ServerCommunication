@@ -87,9 +87,7 @@ class VideoCapture:
         s = str(msg.data).split(',')
         self.cam = int(s[0])
         self.fps = int(s[1])
-        if ((self.cam != self.prev_cam and self.cam in range(len(camList))) or (self.fps != self.prev_fps)):
-	    if self.cam > 1:
-                rospy.sleep(2.)
+        if ((self.cam != self.prev_cam) or (self.fps != self.prev_fps)):
             rospy.logerr('killing current camera')
             self.player.set_state(gst.STATE_NULL)
             self.setCommand()

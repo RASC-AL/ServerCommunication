@@ -18,7 +18,8 @@ def callback(dataS):
 		global baseSocket
 		
 		if baseSocket is None:
-			rospy.loginfo("creating new socket")
+			rospy.logerr("creating new socket")
+                        rospy.logerr(homeIP)
 			baseSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 			#baseSocket.settimeout(1)
 			#baseSocket.connect(("128.205.55.128", 9999))
