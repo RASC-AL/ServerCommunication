@@ -4,6 +4,7 @@
 #This is done so that an immutable state is enforced on the 
 #global object and it only needs to be changed in code once
 def getHomeIP():
-    homeIP = '128.205.55.104'
+    homeIP = '128.205.55.147' #New Computer
+    #homeIP = '128.205.55.104' #Old Computer
     #homeIP = '128.205.55.189' #Local
     return homeIP

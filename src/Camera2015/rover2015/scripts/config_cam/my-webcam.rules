@@ -8,7 +8,7 @@
 
 SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="57DEB4FE", SYMLINK+="video4"
 SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="915FA4FE", SYMLINK+="video6"
-SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="A82FA4FE", SYMLINK+="video5"
-SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="C9CEA4FE", SYMLINK+="video7"
+SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="A82FA4FE", SYMLINK+="video7"
+SUBSYSTEMS=="usb", KERNEL=="video*", ATTRS{serial}=="C9CEA4FE", SYMLINK+="video5"
 
 

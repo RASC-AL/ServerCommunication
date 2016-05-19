@@ -62,7 +62,9 @@ class VideoCapture:
 
         #JPEG
         
-        self.streamCommand = 'v4l2src device=/dev/video' + str(self.cam) + ' ! video/x-raw-yuv, framerate=' + str(self.fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1234'
+        audioStr = ' pulsesrc device=' + audioList[self.cam - 4] +  ' ! audioconvert ! audio/x-raw-int,channels=1,width=16,depth=16,rate=8000 ! amrnbenc ! rtpamrpay ! udpsink host=' + self.homeIP + ' port=1236'
+
+        self.streamCommand = 'v4l2src device=/dev/video' + str(self.cam) + ' ! video/x-raw-yuv, framerate=' + str(self.fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1234' + audioStr
 
         #self.testPlayer1 = gst.parse_launch('udpsrc port=1234 caps="application/x-rtp, payload=127" ! rtpjpegdepay ! jpegdec ! xvimagesink sync=false')
 
