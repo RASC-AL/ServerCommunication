@@ -34,6 +34,7 @@ class VideoCapture:
         self.prev_cam = 4
         self.cam = 4
         self.det_cam = 6
+        self.det_fps = 10
         ipGetter = imp.load_source('ipGetter', '/home/sbrover/Rover2015/src/ipGetter.py')
         self.homeIP = ipGetter.getHomeIP()
         self.setCommand()
@@ -64,6 +65,8 @@ class VideoCapture:
         
         audioStr = ' pulsesrc device=' + audioList[self.cam - 4] +  ' ! audioconvert ! audio/x-raw-int,channels=1,width=16,depth=16,rate=8000 ! amrnbenc ! rtpamrpay ! udpsink host=' + self.homeIP + ' port=1236'
 
+        audioStr = ""
+
         self.streamCommand = 'v4l2src device=/dev/video' + str(self.cam) + ' ! video/x-raw-yuv, framerate=' + str(self.fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1234' + audioStr
 
         #self.testPlayer1 = gst.parse_launch('udpsrc port=1234 caps="application/x-rtp, payload=127" ! rtpjpegdepay ! jpegdec ! xvimagesink sync=false')
@@ -71,8 +74,7 @@ class VideoCapture:
         #self.testPlayer1.set_state(gst.STATE_PLAYING)
 
     def setDetCommand(self):
-
-        self.detCommand = 'v4l2src device=/dev/video' + str(self.det_cam) + ' ! video/x-raw-yuv, framerate=' + str(self.fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1235'
+        self.detCommand = 'v4l2src device=/dev/video' + str(self.det_cam) + ' ! video/x-raw-yuv, framerate=' + str(self.det_fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1235'
         #self.testPlayer2 = gst.parse_launch('udpsrc port=1235 caps="application/x-rtp, payload=127" ! rtpjpegdepay ! jpegdec ! xvimagesink sync=false')
 
         #self.testPlayer2.set_state(gst.STATE_PLAYING)
@@ -100,13 +102,17 @@ class VideoCapture:
  
     def callback_ptz(self, msg):
         rospy.logerr('PTZ camera change message ' + str(msg.data))
-        newCam = 6 + int(msg.data)
-        if newCam != self.det_cam:
-            self.det_cam = newCam
-            self.detPlayer.set_state(gst.STATE_NULL)
-            self.setDetCommand()
-            self.detPlayer = gst.parse_launch(self.detCommand)
-            self.detPlayer.set_state(gst.STATE_PLAYING)
+        msgStr = str(msg.data).strip()
+        if msg.data[0] == 'D':
+            self.det_fps = int(msgStr[1:])
+        else:    
+            newCam = 6 + int(msg.data)
+            if newCam != self.det_cam:
+                self.det_cam = newCam
+        self.detPlayer.set_state(gst.STATE_NULL)
+        self.setDetCommand()
+        self.detPlayer = gst.parse_launch(self.detCommand)
+        self.detPlayer.set_state(gst.STATE_PLAYING)
 
 def listener():
     rospy.init_node('talker', anonymous=True)

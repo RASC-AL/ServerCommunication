@@ -59,10 +59,11 @@ class server:
 	def receive(self):
                 chunk, addr = self.serv.recvfrom(64)
                 s = str(chunk)
+                s = s.strip()
                 if s is None:
 		    rospy.logerr('message was None')
 		    return
-		rospy.loginfo('message recieved : ' + s)
+		#rospy.logerr('message received : ' + s + "end")
 		self.config_pub.publish(s)
 		#print self.client.receive()
 		#sys.stdout.flush()
