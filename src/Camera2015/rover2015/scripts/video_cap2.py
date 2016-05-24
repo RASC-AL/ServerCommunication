@@ -105,7 +105,8 @@ class VideoCapture:
         msgStr = str(msg.data).strip()
         changed = False
         if msg.data[0] == 'D':
-            self.det_fps = int(msgStr[1:])
+            rospy.logerr(msgStr[1:3])
+            self.det_fps = int(msgStr[1:3])
             changed = True
         else:    
             newCam = 6 + int(msg.data)
