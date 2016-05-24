@@ -13,7 +13,7 @@ def talker():
 	#Loop
 	while not rospy.is_shutdown():
         	data = ser.readline()
-      		roverData_pub.publish(data)
+      		roverData_pub.publish('d' + data)
         	r.sleep()
 
 if __name__ == '__main__':

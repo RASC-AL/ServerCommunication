@@ -63,9 +63,9 @@ class VideoCapture:
 
         #JPEG
         
-        audioStr = ' pulsesrc device=' + audioList[self.cam - 4] +  ' ! audioconvert ! audio/x-raw-int,channels=1,width=16,depth=16,rate=8000 ! amrnbenc ! rtpamrpay ! udpsink host=' + self.homeIP + ' port=1236'
+        audioStr = ' pulsesrc device=' + audioList[0] +  ' ! audioconvert ! audio/x-raw-int,channels=1,width=16,depth=16,rate=8000 ! amrnbenc ! rtpamrpay ! udpsink host=' + self.homeIP + ' port=1236'
 
-        audioStr = ""
+        #audioStr = ""
 
         self.streamCommand = 'v4l2src device=/dev/video' + str(self.cam) + ' ! video/x-raw-yuv, framerate=' + str(self.fps) + '/1, width=640, height=480 ! ffmpegcolorspace ! jpegenc ! rtpjpegpay ! udpsink host=' + self.homeIP + ' port=1234' + audioStr
 
@@ -103,16 +103,20 @@ class VideoCapture:
     def callback_ptz(self, msg):
         rospy.logerr('PTZ camera change message ' + str(msg.data))
         msgStr = str(msg.data).strip()
+        changed = False
         if msg.data[0] == 'D':
             self.det_fps = int(msgStr[1:])
+            changed = True
         else:    
             newCam = 6 + int(msg.data)
             if newCam != self.det_cam:
                 self.det_cam = newCam
-        self.detPlayer.set_state(gst.STATE_NULL)
-        self.setDetCommand()
-        self.detPlayer = gst.parse_launch(self.detCommand)
-        self.detPlayer.set_state(gst.STATE_PLAYING)
+                changed = True
+        if changed:
+            self.detPlayer.set_state(gst.STATE_NULL)
+            self.setDetCommand()
+            self.detPlayer = gst.parse_launch(self.detCommand)
+            self.detPlayer.set_state(gst.STATE_PLAYING)
 
 def listener():
     rospy.init_node('talker', anonymous=True)
