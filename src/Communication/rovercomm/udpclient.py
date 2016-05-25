@@ -23,9 +23,9 @@ class udpclient:
         #Handshake
         flag = False
         while not flag:
-            self.sock.sendto("Start", (self.homeIP, 9998))
-            self.sock.settimeout(1)
             try:
+                self.sock.sendto("Start", (self.homeIP, 9998))
+                self.sock.settimeout(1)
                 self.sock.recvfrom(64)
                 flag = True
             except socket.timeout:
