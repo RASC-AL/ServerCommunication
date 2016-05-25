@@ -3,7 +3,7 @@ import socket
 import sys
 import rospy
 import imp
-
+from std_msgs.msg import String
 from common import *
 
 #communication: holder class for socket, contains the socket and the receive function
@@ -17,10 +17,16 @@ class udpclient:
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
-        #Temporary hack 
-        for(i in range(0, 10)):
+        #Handshake
+        flag = False
+        while not flag:
             self.sock.sendto("Start", (self.homeIP, 9998))
-        
+            self.sock.settimeout(1)
+            try:
+                self.recvfrom(64)
+                flag = True
+            except socket.timeout:
+                rospy.logerr("Waiting for response from server")
 
     def start(self):
         while(True):
