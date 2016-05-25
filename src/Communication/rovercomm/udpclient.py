@@ -16,7 +16,10 @@ class udpclient:
         self.homeIP = ipGetter.getHomeIP()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        
+    
+        self.handShake()
+
+    def handShake(self):
         #Handshake
         flag = False
         while not flag:
@@ -34,6 +37,7 @@ class udpclient:
                 self.receive()
             except socket.timeout:
                 rospy.logerr("Waiting for command")
+                self.handShake()
 
     def receive(self):
         chunk, addr = self.sock.recvfrom(64)
