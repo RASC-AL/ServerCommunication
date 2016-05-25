@@ -102,10 +102,10 @@ class VideoCapture:
  
     def callback_ptz(self, msg):
         rospy.logerr('PTZ camera change message ' + str(msg.data))
-        msgStr = str(msg.data).strip()
+        msgStr = str(msg.data)
         changed = False
         if msg.data[0] == 'D':
-            rospy.logerr(msgStr[1:3])
+            rospy.logerr(msgStr)
             self.det_fps = int(msgStr[1:3])
             changed = True
         else:    
