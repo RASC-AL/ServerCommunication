@@ -30,7 +30,10 @@ class udpclient:
 
     def start(self):
         while(True):
-            self.receive()
+            try:
+                self.receive()
+            except socket.timeout:
+                rospy.logerr("Waiting for command")
 
     def receive(self):
         chunk, addr = self.sock.recvfrom(64)
