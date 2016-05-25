@@ -30,6 +30,8 @@ class udpclient:
                 flag = True
             except socket.timeout:
                 rospy.logerr("Waiting for response from server")
+            except IOError, e:
+                rospy.logerr("Network unreachable")
 
     def start(self):
         while(True):
