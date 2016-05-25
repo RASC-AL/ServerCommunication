@@ -23,7 +23,7 @@ class udpclient:
             self.sock.sendto("Start", (self.homeIP, 9998))
             self.sock.settimeout(1)
             try:
-                self.recvfrom(64)
+                self.sock.recvfrom(64)
                 flag = True
             except socket.timeout:
                 rospy.logerr("Waiting for response from server")
